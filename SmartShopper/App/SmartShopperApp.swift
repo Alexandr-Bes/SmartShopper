@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct SmartShopperApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @State private var appManager = AppManager()
 
     var body: some Scene {
@@ -16,6 +17,9 @@ struct SmartShopperApp: App {
             TabsView()
                 .environment(appManager)
                 .onOpenURL(perform: handleDeepLink)
+                .onAppear {
+                    appManager.appLaunched()
+                }
         }
     }
 

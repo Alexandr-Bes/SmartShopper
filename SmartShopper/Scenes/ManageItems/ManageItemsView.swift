@@ -32,7 +32,7 @@ struct ManageItemsView<ViewModel: GroceryListViewModelProtocol>: View {
                 let newItem = GroceryItem(
                     name: newItemName,
                     category: .unCategorized,
-                    store: .pingoDoce,
+                    stores: [mockStores.first!], // TODO: - Store
                     isBought: false
                 )
                 viewModel.addItem(newItem)

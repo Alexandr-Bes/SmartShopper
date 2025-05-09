@@ -18,18 +18,14 @@ final class GroceryRepository: GroceryRepositoryProtocol {
     func getItems() async throws -> [GroceryItem] {
         Log.debug("Preparing to simulate item load...")
 
-        try await Task.sleep(for: .seconds(2)) // Simulated network delay
+        try await Task.sleep(for: .seconds(1)) // Simulated network delay
 
-        let items = [
-            GroceryItem(name: "Milk", category: .unCategorized, store: .pingoDoce),
-            GroceryItem(name: "Bread", category: .unCategorized, store: .pingoDoce),
-            GroceryItem(name: "Apples", category: .fruits, store: .pingoDoce),
-            GroceryItem(name: "Eggs", category: .meat, store: .pingoDoce)
-        ]
+        let items = mockItems
+        let result = items.sorted { $0.category < $1.category }
 
         Log.debug("Simulated loading \(items.count) grocery items")
 
-        return items
+        return result
     }
 
     func updateItems(_ items: [GroceryItem]) {
@@ -40,5 +36,45 @@ final class GroceryRepository: GroceryRepositoryProtocol {
     func deleteItems(_ ids: [String]) {
         Log.debug("Simulating deletion of \(ids.count) items:")
         ids.forEach { Log.debug("Deleting item with id: \($0)") }
+    }
+}
+
+
+//MARK: - MOCKS
+
+let mockStores: [GroceryStore] = [GroceryStore(name: "Pingo Doce"),
+                                  GroceryStore(name: "Continente")]
+let mockItems = [
+    GroceryItem(name: "Milk", category: .unCategorized, stores: [mockStores.first!]),
+    GroceryItem(name: "Bread", category: .unCategorized, stores: mockStores),
+    GroceryItem(name: "Apples", category: .fruits, stores: mockStores),
+    GroceryItem(name: "Oranges", category: .fruits, stores: mockStores),
+    GroceryItem(name: "Eggs", category: .meat, stores: mockStores)
+]
+
+enum GroceryStoreType: CaseIterable, Comparable, RawRepresentable {
+    case pingoDoce
+    case continente
+
+    var name: String {
+        switch self {
+        case .pingoDoce: "Pingo Doce"
+        case .continente: "Continente"
+        }
+    }
+
+    init?(rawValue: String) {
+        switch rawValue.lowercased() {
+        case "pingoDoce": self = GroceryStoreType.pingoDoce
+        case "continente": self = GroceryStoreType.continente
+        default: return nil
+        }
+    }
+
+    var rawValue: String {
+        switch self {
+        case .pingoDoce: "pingoDoce"
+        case .continente: "continente"
+        }
     }
 }

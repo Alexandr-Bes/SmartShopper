@@ -12,28 +12,9 @@ struct HomeView<ViewModel: GroceryListViewModelProtocol>: View {
 
     var body: some View {
         VStack {
-            Picker("Store", selection: $viewModel.selectedStore) {
-                ForEach(GroceryStore.allCases, id: \.self) {
-                    Text($0.name)
-                        .tag($0)
-                }
-            }
-            .pickerStyle(.segmented)
-            .onChange(of: viewModel.selectedStore) { oldValue, newValue in
-                Log.debug("Selected store changed from: \(oldValue) to \(newValue)")
-            }
-            .padding(.horizontal)
+            storePickerView
 
-            Picker("Sort by", selection: $viewModel.sortOption) {
-                Text("Name").tag(GroceryItemsSortType.name)
-                Text("Category").tag(GroceryItemsSortType.category)
-                Text("Store").tag(GroceryItemsSortType.store)
-            }
-            .pickerStyle(.menu)
-            .onChange(of: viewModel.sortOption) { //oldValue, newValue in
-                viewModel.sortItems()
-            }
-            .padding()
+            sortItemsView
 
             if viewModel.items.isEmpty {
                 ProgressView()
@@ -43,18 +24,37 @@ struct HomeView<ViewModel: GroceryListViewModelProtocol>: View {
         }
     }
 
+    @ViewBuilder var storePickerView: some View {
+        Picker("Store", selection: $viewModel.selectedStore) {
+            ForEach(mockStores, id: \.self) {
+                Text($0.name)
+                    .tag($0)
+            }
+        }
+        .pickerStyle(.segmented)
+        .onChange(of: viewModel.selectedStore) { oldValue, newValue in
+            Log.debug("Selected store changed from: \(oldValue) to \(newValue)")
+        }
+        .padding(.horizontal)
+    }
+
+    @ViewBuilder var sortItemsView: some View {
+        Picker("Sort by", selection: $viewModel.sortOption) {
+            Text("Name").tag(GroceryItemsSortType.name)
+            Text("Category").tag(GroceryItemsSortType.category)
+        }
+        .pickerStyle(.menu)
+        .onChange(of: viewModel.sortOption) {
+            viewModel.sortItems()
+        }
+        .padding()
+    }
+
     @ViewBuilder var listView: some View {
         List {
-            ForEach(viewModel.items) { item in
-                HStack {
-                    Text(item.name)
-                        .padding(.trailing)
-                    Text(item.emoji ?? "")
-                    Spacer()
-                    Image(systemName: item.isBought ? "checkmark.square.fill" : "square")
-                        .onTapGesture {
-                            viewModel.toggleItem(item)
-                        }
+            ForEach(viewModel.items, id: \.id) { item in
+                GroceryItemRow(item: item) {
+                    viewModel.toggleItem(item)
                 }
             }
         }

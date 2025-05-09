@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1C5FE8A12DCA946200B67526 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5FE8A02DCA946200B67526 /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		1C5FE8A32DCA946200B67526 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5FE8A22DCA946200B67526 /* FirebaseCore */; };
+		1C5FE8A52DCA946200B67526 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5FE8A42DCA946200B67526 /* FirebaseCrashlytics */; };
+		1C5FE8A72DCA946200B67526 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 1C5FE8A62DCA946200B67526 /* FirebaseStorage */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		1CBC44732DC8CD42001A3418 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +59,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C5FE8A52DCA946200B67526 /* FirebaseCrashlytics in Frameworks */,
+				1C5FE8A72DCA946200B67526 /* FirebaseStorage in Frameworks */,
+				1C5FE8A32DCA946200B67526 /* FirebaseCore in Frameworks */,
+				1C5FE8A12DCA946200B67526 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,6 +124,10 @@
 			);
 			name = SmartShopper;
 			packageProductDependencies = (
+				1C5FE8A02DCA946200B67526 /* FirebaseAnalyticsWithoutAdIdSupport */,
+				1C5FE8A22DCA946200B67526 /* FirebaseCore */,
+				1C5FE8A42DCA946200B67526 /* FirebaseCrashlytics */,
+				1C5FE8A62DCA946200B67526 /* FirebaseStorage */,
 			);
 			productName = SmartShopper;
 			productReference = 1CBC44652DC8CD40001A3418 /* SmartShopper.app */;
@@ -198,6 +213,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				1CBC44902DC8D630001A3418 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				1C5FE89F2DCA946200B67526 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1CBC44662DC8CD40001A3418 /* Products */;
@@ -592,6 +608,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1C5FE89F2DCA946200B67526 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = exactVersion;
+				version = 11.12.0;
+			};
+		};
 		1CBC44902DC8D630001A3418 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/SwiftLint";
@@ -601,6 +625,29 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1C5FE8A02DCA946200B67526 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1C5FE89F2DCA946200B67526 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		1C5FE8A22DCA946200B67526 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1C5FE89F2DCA946200B67526 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		1C5FE8A42DCA946200B67526 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1C5FE89F2DCA946200B67526 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		1C5FE8A62DCA946200B67526 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1C5FE89F2DCA946200B67526 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1CBC445D2DC8CD40001A3418 /* Project object */;
 }

@@ -120,8 +120,6 @@ final class Log {
     }
 }
 
-// swiftlint:enable all
-
 // MARK: - Custom Print -
 
 /// This won't print your input if it is in Release Mode. The function will execute only in Debug Mode.
@@ -142,3 +140,4 @@ public func print(_ items: Any..., separator: String = " ", terminator: String =
         Swift.print(output, terminator: terminator)
     #endif
 }
+// swiftlint:enable all

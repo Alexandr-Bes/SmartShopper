@@ -15,7 +15,13 @@ enum TabTarget: String {
 
 @Observable
 final class AppManager {
-    var currentStore: GroceryStore = .pingoDoce
+    private var actualStore = GroceryStore(name: "Pingo Doce")
+
+    var currentStore: GroceryStore { actualStore }
     var deepLinkTarget: TabTarget?
 
+    func appLaunched() {
+        // TODO: - Get data from location or last selected
+        actualStore = mockStores.first!
+    }
 }

@@ -38,6 +38,8 @@ struct TabsView: View {
 }
 
 #Preview {
+    let appManager = AppManager()
     TabsView()
-        .environment(AppManager())
+        .environment(appManager)
+        .onAppear { appManager.appLaunched() }
 }

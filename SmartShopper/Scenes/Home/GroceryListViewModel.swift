@@ -5,7 +5,7 @@
 //  Created by AlexBezkopylnyi on 05.05.2025.
 //
 
-import Foundation
+import SwiftUI
 import Combine
 
 protocol GroceryListViewModelProtocol: Observable {
@@ -21,16 +21,14 @@ protocol GroceryListViewModelProtocol: Observable {
 
 @Observable
 final class GroceryListViewModel: GroceryListViewModelProtocol {
-    var items: [GroceryItem] = []
-    var selectedStore: GroceryStore = .pingoDoce
-    var sortOption: GroceryItemsSortType = .name
+    var items: [GroceryItem] = mockItems // []
+    var selectedStore = GroceryStore(name: "")
+    var sortOption: GroceryItemsSortType = .category
 
     private let repository: GroceryRepositoryProtocol
 
-    init(repository: GroceryRepositoryProtocol = GroceryRepository(),
-         selectedStore: GroceryStore = .pingoDoce) {
+    init(repository: GroceryRepositoryProtocol = GroceryRepository()) {
         self.repository = repository
-        self.selectedStore = selectedStore
     }
 
     func bind(to appManager: AppManager) {
@@ -62,7 +60,9 @@ final class GroceryListViewModel: GroceryListViewModelProtocol {
 
     func toggleItem(_ item: GroceryItem) {
         guard let index = items.firstIndex(of: item) else { return }
-        items[index].isBought.toggle()
+        var updatedItem = item
+        updatedItem.isBought.toggle()
+        items[index] = updatedItem
         repository.updateItems(items)
     }
 
@@ -72,8 +72,6 @@ final class GroceryListViewModel: GroceryListViewModelProtocol {
             items.sort { $0.name < $1.name }
         case .category:
             items.sort { $0.category < $1.category }
-        case .store:
-            items.sort { $0.store < $1.store }
         }
     }
 
