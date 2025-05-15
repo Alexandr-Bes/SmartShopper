@@ -21,18 +21,25 @@ protocol GroceryListViewModelProtocol: Observable {
 
 @Observable
 final class GroceryListViewModel: GroceryListViewModelProtocol {
-    var items: [GroceryItem] = mockItems // []
+    var items: [GroceryItem]
     var selectedStore = GroceryStore(name: "")
     var sortOption: GroceryItemsSortType = .category
 
-    private let repository: GroceryRepositoryProtocol
+    private var repository: GroceryRepositoryProtocol?
 
-    init(repository: GroceryRepositoryProtocol = GroceryRepository()) {
-        self.repository = repository
+//    init(repository: GroceryRepositoryProtocol,
+//         items: [GroceryItem] = []) {
+//        self.repository = repository
+//        self.items = items
+//    }
+
+    init(items: [GroceryItem] = []) {
+        self.items = items
     }
 
     func bind(to appManager: AppManager) {
         selectedStore = appManager.currentStore
+        repository = appManager.groceryRepository
         loadItems()
 
         // Observe current store changes
@@ -50,8 +57,8 @@ final class GroceryListViewModel: GroceryListViewModelProtocol {
     func loadItems() {
         Task {
             do {
-                let items = try await repository.getItems()
-                self.items = items
+                let items = try await repository?.getItems()
+                self.items = items ?? []
             } catch {
                 Log.error("Failed to load items: \(error)")
             }
@@ -63,7 +70,7 @@ final class GroceryListViewModel: GroceryListViewModelProtocol {
         var updatedItem = item
         updatedItem.isBought.toggle()
         items[index] = updatedItem
-        repository.updateItems(items)
+        repository?.updateItems(items)
     }
 
     func sortItems() {

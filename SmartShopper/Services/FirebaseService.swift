@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseCore
 
 protocol FetchDataService {
     func fetchData<T: Decodable>(from url: URL, completion: @escaping (Result<T, Error>) -> Void)
@@ -13,6 +14,10 @@ protocol FetchDataService {
 }
 
 final class FirebaseService: FetchDataService {
+    static func setup() {
+        FirebaseApp.configure()
+    }
+
     func fetchData<T: Decodable>(from url: URL, completion: @escaping (Result<T, Error>) -> Void) {
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data else {

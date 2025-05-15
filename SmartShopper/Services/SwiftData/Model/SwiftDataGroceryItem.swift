@@ -18,7 +18,7 @@ final class SwiftDataGroceryItem {
     var createdAt: Date?
     var updatedAt: Date?
 
-    var stores: [SwiftDataGroceryStore] = []
+    var stores: [SwiftDataGroceryStore]
 
     init(id: String = UUID().uuidString,
          name: String,
@@ -38,7 +38,6 @@ final class SwiftDataGroceryItem {
 // MARK: - Grocery Item Storable
 extension SwiftDataGroceryItem: GroceryItemStorable {
     typealias StoreType = SwiftDataGroceryStore
-//    var stores: [GroceryStoreStorable] { self.stores }
     var icon: String? { nil } // For now
     var categoryRaw: String { category }
 }

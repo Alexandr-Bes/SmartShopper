@@ -90,7 +90,10 @@ enum GroceryItemCategory: String, CaseIterable, Comparable {
     case meat
     case fish
     case spices
-    case cerealAndNoodles
+    case cerealAndPasta
+    case seasoning
+    case sweat
+    case drinks
     case unCategorized
 
     var sortOrder: Int {
@@ -100,7 +103,10 @@ enum GroceryItemCategory: String, CaseIterable, Comparable {
         case .meat: return 2
         case .fish: return 3
         case .spices: return 4
-        case .cerealAndNoodles: return 5
+        case .cerealAndPasta: return 5
+        case .seasoning: return 6
+        case .sweat: return 7
+        case .drinks: return 8
         case .unCategorized: return 99
         }
     }

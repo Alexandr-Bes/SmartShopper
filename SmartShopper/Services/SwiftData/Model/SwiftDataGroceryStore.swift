@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class SwiftDataGroceryStore: Identifiable, Hashable, Equatable {
+final class SwiftDataGroceryStore: Hashable, Equatable { // Identifiable,
     @Attribute(.unique) var id: String
     var name: String
     var location: String?
@@ -17,14 +17,19 @@ final class SwiftDataGroceryStore: Identifiable, Hashable, Equatable {
     var createdAt: Date?
     var updatedAt: Date?
 
-    @Relationship(inverse: \SwiftDataGroceryItem.stores)
-    var items: [SwiftDataGroceryItem] = []
+    @Relationship(deleteRule: .nullify, inverse: \SwiftDataGroceryItem.stores)
+    var items: [SwiftDataGroceryItem]
 
-    init(id: String = UUID().uuidString, name: String, location: String? = nil, icon: String? = nil) {
+    init(id: String = UUID().uuidString,
+         name: String,
+         location: String? = nil,
+         icon: String? = nil,
+         items: [SwiftDataGroceryItem] = []) {
         self.id = id
         self.name = name
         self.location = location
         self.icon = icon
+        self.items = items
     }
 
     static func == (lhs: SwiftDataGroceryStore, rhs: SwiftDataGroceryStore) -> Bool {

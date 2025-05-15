@@ -62,5 +62,5 @@ struct HomeView<ViewModel: GroceryListViewModelProtocol>: View {
 }
 
 #Preview {
-    HomeView(viewModel: GroceryListViewModel())
+    HomeView(viewModel: GroceryListViewModel(items: mockItems))
 }

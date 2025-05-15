@@ -6,22 +6,58 @@
 //
 
 import Observation
-
-enum TabTarget: String {
-    case list
-    case order
-    case manage
-}
+import SwiftData
 
 @Observable
 final class AppManager {
     private var actualStore = GroceryStore(name: "Pingo Doce")
 
+    let context: ModelContext
+
+    let dataSource: GroceryDataSourceProtocol
+    let groceryRepository: GroceryRepositoryProtocol
+
     var currentStore: GroceryStore { actualStore }
     var deepLinkTarget: TabTarget?
 
-    func appLaunched() {
+    init(context: ModelContext,
+         dataSource: GroceryDataSourceProtocol) {
+        self.context = context
+        self.dataSource = dataSource
+        self.groceryRepository = GroceryRepository(dataSource: dataSource)
+    }
+
+    func appLaunched() async {
         // TODO: - Get data from location or last selected
         actualStore = mockStores.first!
+        await setupStorage()
+    }
+}
+
+private extension AppManager {
+    func setupStorage() async {
+        await setDefaultItemsIfNeeded(using: dataSource)
+    }
+
+    func setDefaultItemsIfNeeded(using dataSource: GroceryDataSourceProtocol) async {
+        let defaultItems = groceryDefaultItems
+        try? await dataSource.setDefaultItemsIfNeeded(defaultItems)
+    }
+}
+
+@MainActor
+enum AppManagerFactory {
+    static func make() async -> AppManager {
+        let context = ModelContainerProvider.shared.context
+        let dataSource = SwiftDataGroceryDataSource(modelContext: context)
+        return AppManager(context: context, dataSource: dataSource)
+    }
+
+    static func makeTesting() -> AppManager {
+        let preview = PreviewModelContainer()
+        preview.addExamples()
+        let context = preview.context
+        let dataSource = PreviewMockedDataSource(context: context)
+        return AppManager(context: context, dataSource: dataSource)
     }
 }
