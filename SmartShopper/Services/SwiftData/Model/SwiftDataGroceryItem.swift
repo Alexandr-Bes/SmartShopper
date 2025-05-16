@@ -25,6 +25,8 @@ final class SwiftDataGroceryItem {
          category: String,
          isBought: Bool = false,
          sortIndex: Int? = nil,
+         createdAt: Date = Date(),
+         updatedAt: Date? = nil,
          stores: [SwiftDataGroceryStore] = []) {
         self.id = id
         self.name = name

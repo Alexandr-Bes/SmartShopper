@@ -9,14 +9,17 @@ import SwiftData
 
 @MainActor
 final class SwiftDataGroceryDataSource: GroceryDataSourceProtocol {
+
     private let context: ModelContext
+    private let localStorage: LocalStorageAdapter
 
     private var didSeedDefaults: Bool {
-        UserDefaults.standard.bool(forKey: "didSeedGroceryItems") // TODO: - Move to wrapper
+        localStorage.get(for: UserDefaultsKey.didSetDefaultItems, default: false)
     }
 
-    init(modelContext: ModelContext) {
+    init(modelContext: ModelContext, localStorage: LocalStorageAdapter) {
         self.context = modelContext
+        self.localStorage = localStorage
     }
 
     @MainActor
@@ -49,6 +52,6 @@ final class SwiftDataGroceryDataSource: GroceryDataSourceProtocol {
             context.insert(entity)
         }
         try context.save()
-        UserDefaults.standard.set(true, forKey: "didSetGroceryItems")
+        localStorage.set(true, for: UserDefaultsKey.didSetDefaultItems)
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class SwiftDataGroceryStore: Hashable, Equatable { // Identifiable,
+final class SwiftDataGroceryStore: Hashable, Equatable {
     @Attribute(.unique) var id: String
     var name: String
     var location: String?
@@ -24,6 +24,8 @@ final class SwiftDataGroceryStore: Hashable, Equatable { // Identifiable,
          name: String,
          location: String? = nil,
          icon: String? = nil,
+         createdAt: Date = Date(),
+         updatedAt: Date? = nil,
          items: [SwiftDataGroceryItem] = []) {
         self.id = id
         self.name = name
