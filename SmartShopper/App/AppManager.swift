@@ -49,7 +49,7 @@ private extension AppManager {
 enum AppManagerFactory {
     static func make() async -> AppManager {
         let context = ModelContainerProvider.shared.context
-        let dataSource = SwiftDataGroceryDataSource(modelContext: context)
+        let dataSource = SwiftDataGroceryDataSource(modelContext: context, localStorage: UserDefaultsStorageAdapter())
         return AppManager(context: context, dataSource: dataSource)
     }
 

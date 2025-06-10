@@ -18,7 +18,9 @@ struct GroceryItemRow: View {
             Text(item.emoji ?? "")
             Spacer()
             CheckboxView(isChecked: item.isBought, onToggle: onToggle)
+                .frame(width: 18, height: 18)
         }
+        .padding(.horizontal, 8)
     }
 }
 

@@ -34,6 +34,7 @@ struct TabsView: View {
                 .tabItem { Label("Manage", systemImage: "plus.circle") }
                 .tag(TabTarget.manage)
         }
+        .tabBarMinimizeBehavior(.onScrollDown)
         .onAppear {
             groceryListViewModel.bind(to: appManager)
 //            groceryListViewModel.selectedStore = appManager.currentStore

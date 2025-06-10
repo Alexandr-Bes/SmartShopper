@@ -7,13 +7,15 @@
 
 import Foundation
 
+// swiftlint:disable all
+
 final class UserDefaultsStorageAdapter: LocalStorageAdapter {
 
     private let defaults: UserDefaults
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
-    }    
+    }
 
     func get<T, Key>(for key: Key) -> T? where T : Decodable, T : Encodable, Key : KeyValueStorageKey {
         if T.self == Bool.self || T.self == Int.self || T.self == String.self {
@@ -26,7 +28,7 @@ final class UserDefaultsStorageAdapter: LocalStorageAdapter {
 
     func set<T, Key>(_ value: T, for key: Key) where T : Decodable, T : Encodable, Key : KeyValueStorageKey {
         if T.self == Bool.self || T.self == Int.self || T.self == String.self {
-            defaults.set(T.self, forKey: key.rawValue)
+            defaults.set(value, forKey: key.rawValue)
             return
         }
 

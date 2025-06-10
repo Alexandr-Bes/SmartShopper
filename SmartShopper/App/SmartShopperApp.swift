@@ -11,28 +11,35 @@ import SwiftData
 @main
 struct SmartShopperApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @State private var appManager: AppManager?
-    @State private var isLoading = true
 
     var body: some Scene {
         WindowGroup {
-            Group {
-                if let manager = appManager {
-                    TabsView()
-                        .environment(manager)
-                        .onOpenURL(perform: handleDeepLink)
-                        .onAppear {
-                            Task {
-                                await manager.appLaunched()
-                            }
+            ContentView()
+        }
+    }
+}
+
+struct ContentView: View {
+    @State private var appManager: AppManager?
+    @State private var isLoading = true
+
+    var body: some View {
+        Group {
+            if let manager = appManager {
+                TabsView()
+                    .environment(manager)
+                    .onOpenURL(perform: handleDeepLink)
+                    .onAppear {
+                        Task {
+                            await manager.appLaunched()
                         }
-                } else {
-                    SplashView()
-                }
+                    }
+            } else {
+                SplashView()
             }
-            .task {
-                await loadAppManager()
-            }
+        }
+        .task {
+            await loadAppManager()
         }
     }
 
@@ -40,17 +47,14 @@ struct SmartShopperApp: App {
         appManager = await AppManagerFactory.make()
         isLoading = false
     }
-}
 
-private extension SmartShopperApp {
-    func handleDeepLink(_ url: URL) {
+    private func handleDeepLink(_ url: URL) {
         guard let host = url.host else { return }
         if let target = TabTarget(rawValue: host) {
             appManager?.deepLinkTarget = target
         }
     }
 }
-
 
 struct SplashView: View {
     var body: some View {
