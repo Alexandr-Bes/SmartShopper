@@ -31,5 +31,5 @@ struct ReorderItemsView: View {
 }
 
 #Preview {
-    ReorderItemsView(viewModel: GroceryListViewModel())
+    ReorderItemsView(viewModel: GroceryListViewModel(items: mockItems))
 }

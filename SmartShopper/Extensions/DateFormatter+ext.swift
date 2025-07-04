@@ -17,14 +17,14 @@ extension DateFormatter {
 
     static let mediumDate: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateStyle = .medium    // e.g. May 6, 2025
+        formatter.dateStyle = .medium // e.g. May 6, 2025
         formatter.timeStyle = .none
         return formatter
     }()
 
     static let dateWithTime: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateStyle = .medium    // e.g. May 6, 2025
+        formatter.dateStyle = .medium
         formatter.timeStyle = .full
         return formatter
     }()

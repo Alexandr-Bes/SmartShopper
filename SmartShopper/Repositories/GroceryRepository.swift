@@ -9,8 +9,9 @@ import Foundation
 
 protocol GroceryRepositoryProtocol {
     func getItems() async throws -> [GroceryItem]
-    func updateItems(_ items: [GroceryItem])
-    func deleteItems(_ ids: [String])
+    func updateItem(_ item: GroceryItemProtocol) async throws
+    func updateItems(_ items: [GroceryItem]) async throws
+    func deleteItems(_ ids: [String]) async throws
 }
 
 final class GroceryRepository: GroceryRepositoryProtocol {
@@ -27,18 +28,17 @@ final class GroceryRepository: GroceryRepositoryProtocol {
         return groceryItems
     }
 
-    func updateItems(_ items: [GroceryItem]) {
-        Task {
-            Log.debug("Updating \(items.count) items:")
-            try? await dataSource.updateItems(items)
-        }
+    func updateItem(_ item: GroceryItemProtocol) async throws {
+        try await dataSource.updateItem(item)
     }
 
-    func deleteItems(_ ids: [String]) {
-        Task {
-            ids.forEach { Log.debug("Deleting item with id: \($0)") }
-            try? await dataSource.deleteItems(with: ids)
-        }
+    func updateItems(_ items: [GroceryItem]) async throws {
+        try await dataSource.updateItems(items)
+    }
+
+    func deleteItems(_ ids: [String]) async throws {
+        ids.forEach { Log.debug("Deleting item with id: \($0)") }
+        try await dataSource.deleteItems(with: ids)
     }
 }
 
@@ -78,34 +78,3 @@ let mockItems = [
     GroceryItem(name: "Chicken", category: .meat, stores: mockStores),
     GroceryItem(name: "Eggs", category: .meat, stores: mockStores)
 ]
-
-
-/*
-enum GroceryStoreType: CaseIterable, Comparable, RawRepresentable {
-    case pingoDoce
-    case continente
-
-    var name: String {
-        switch self {
-        case .pingoDoce: "Pingo Doce"
-        case .continente: "Continente"
-        }
-    }
-
-    init?(rawValue: String) {
-        switch rawValue.lowercased() {
-        case "pingoDoce": self = GroceryStoreType.pingoDoce
-        case "continente": self = GroceryStoreType.continente
-        default: return nil
-        }
-    }
-
-    var rawValue: String {
-        switch self {
-        case .pingoDoce: "pingoDoce"
-        case .continente: "continente"
-        }
-    }
-}
-
-*/

@@ -22,27 +22,59 @@ final class SwiftDataGroceryDataSource: GroceryDataSourceProtocol {
         self.localStorage = localStorage
     }
 
-    @MainActor
-    func fetchItems() async throws -> [any GroceryItemStorable] { // async?
+    func fetchItems() async throws -> [SwiftDataGroceryItem] {
         let descriptor = FetchDescriptor<SwiftDataGroceryItem>()
         let result = try context.fetch(descriptor)
         return result
     }
 
+    func fetchItems() async throws -> [any GroceryItemStorable] {
+        let descriptor = FetchDescriptor<SwiftDataGroceryItem>()
+        let result = try context.fetch(descriptor)
+        return result
+    }
+
+    func updateItem(_ item: any GroceryItemProtocol) async throws {
+        let itemId = item.id
+        let descriptor = FetchDescriptor<SwiftDataGroceryItem>(
+            predicate: #Predicate { $0.id == itemId }
+        )
+        guard let storedItem = try context.fetch(descriptor).first else {
+            Log.error("Can't find item: \(item)")
+            return
+        }
+
+        //TODO: updating other values as well
+        storedItem.isBought = item.isBought
+//        storedItem.category = item.category
+//        storedItem.sortIndex = item.sortIndex
+//        storedItem.stores = item.stores
+//        storedItem.updatedAt = Date()
+        do {
+            try context.save()
+        } catch {
+            Log.error("Can't update item: \(item). Error: \(error)")
+        }
+    }
+
     func updateItems(_ items: [any GroceryItemProtocol]) async throws {
-        try context.save()
+        do {
+            try context.save()
+        } catch {
+            Log.debug(error)
+        }
     }
 
     func deleteItems(with ids: [String]) async throws {
-//        for id in ids {
-//            let descriptor = FetchDescriptor<SwiftDataGroceryItem>(
-//                predicate: #Predicate { $0.id == id }
-//            )
-//            if let item = try context.fetch(descriptor).first {
-//                context.delete(item)
-//            }
-//        }
-//        try context.save()
+        for id in ids {
+            let descriptor = FetchDescriptor<SwiftDataGroceryItem>(
+                predicate: #Predicate { $0.id == id }
+            )
+            if let item = try context.fetch(descriptor).first {
+                context.delete(item)
+            }
+        }
+        try context.save()
     }
     
     func setDefaultItemsIfNeeded(_ items: [any GroceryItemProtocol]) async throws {

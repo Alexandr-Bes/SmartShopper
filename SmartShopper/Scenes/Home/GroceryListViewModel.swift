@@ -25,40 +25,27 @@ final class GroceryListViewModel: GroceryListViewModelProtocol {
     var items: [GroceryItem] = []
     var selectedStore = GroceryStore(name: "")
     var sortOption: GroceryItemsSortType = .category
+    var stores: [GroceryStore] = mockStores
 
-    private var repository: GroceryRepositoryProtocol?
+    private let repository: any GroceryRepositoryProtocol
 
-    init(items: [GroceryItem] = []) {
+    init(currentStore: GroceryStore, repository: any GroceryRepositoryProtocol) {
+        self.selectedStore = currentStore
+        self.repository = repository
+        loadItems()
+    }
+
+    // For Previews
+    init(items: [GroceryItem]) {
         self.items = items
-    }
-
-    init(appManager: AppManager) {
-        self.selectedStore = appManager.currentStore
-        self.repository = appManager.groceryRepository
-        loadItems()
-    }
-
-    func bind(to appManager: AppManager) {
-        selectedStore = appManager.currentStore
-        repository = appManager.groceryRepository
-        loadItems()
-
-        withObservationTracking {
-            _ = appManager.currentStore
-        } onChange: { [weak self, weak appManager] in
-            guard let self, let store = appManager?.currentStore else { return }
-            if self.selectedStore != store {
-                self.selectedStore = store
-                self.loadItems()
-            }
-        }
+        self.repository = MockGroceryRepository()
     }
 
     func loadItems() {
         Task {
             do {
-                let items = try await repository?.getItems()
-                self.items = items ?? []
+                let items = try await repository.getItems()
+                self.items = items
             } catch {
                 Log.error("Failed to load items: \(error)")
             }
@@ -70,7 +57,11 @@ final class GroceryListViewModel: GroceryListViewModelProtocol {
         var updatedItem = item
         updatedItem.isBought.toggle()
         items[index] = updatedItem
-        repository?.updateItems(items)
+
+        Task {
+            await update(item: updatedItem)
+            Log.debug("Updated item: \(updatedItem)")
+        }
     }
 
     func sortItems() {
@@ -84,5 +75,15 @@ final class GroceryListViewModel: GroceryListViewModelProtocol {
 
     func addItem(_ item: GroceryItem) {
         items.append(item)
+    }
+}
+
+private extension GroceryListViewModel {
+    func update(item: GroceryItem) async {
+        do {
+            try await repository.updateItem(item)
+        } catch {
+            Log.error("Failed to update items: \(error)")
+        }
     }
 }

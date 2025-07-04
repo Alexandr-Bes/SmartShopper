@@ -23,6 +23,10 @@ final class PreviewMockedDataSource: GroceryDataSourceProtocol {
         return result
     }
 
+    func updateItem(_ item: any GroceryItemProtocol) async throws {
+        Log.debug("Update item: \(item)")
+    }
+
     func updateItems(_ items: [any GroceryItemProtocol]) async throws {
         Log.debug(items.map(\.name))
     }

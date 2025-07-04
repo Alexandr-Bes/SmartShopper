@@ -44,5 +44,5 @@ struct ManageItemsView<ViewModel: GroceryListViewModelProtocol>: View {
 }
 
 #Preview {
-    ManageItemsView(viewModel: GroceryListViewModel())
+    ManageItemsView(viewModel: GroceryListViewModel(items: mockItems))
 }

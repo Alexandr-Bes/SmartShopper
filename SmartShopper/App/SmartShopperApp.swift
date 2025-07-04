@@ -26,7 +26,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             if let manager = appManager {
-                TabsView()
+                TabsView(appManager: manager)
                     .environment(manager)
                     .onOpenURL(perform: handleDeepLink)
                     .onAppear {

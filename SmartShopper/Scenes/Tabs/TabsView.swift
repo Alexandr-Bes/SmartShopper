@@ -18,7 +18,13 @@ struct TabsView: View {
     @Environment(AppManager.self) private var appManager
 
     @State private var selection: TabTarget = .list
-    @State private var groceryListViewModel = GroceryListViewModel()
+    @State private var groceryListViewModel: GroceryListViewModel
+
+    init(appManager: AppManager) {
+        _groceryListViewModel = State(
+            wrappedValue: GroceryListViewModel(currentStore: appManager.currentStore, repository: appManager.groceryRepository)
+        )
+    }
 
     var body: some View {
         TabView {
@@ -35,13 +41,6 @@ struct TabsView: View {
                 .tag(TabTarget.manage)
         }
         .tabBarMinimizeBehavior(.onScrollDown)
-        .onAppear {
-            groceryListViewModel.bind(to: appManager)
-//            groceryListViewModel.selectedStore = appManager.currentStore
-//            Task {
-//                await groceryListViewModel.loadItems()
-//            }
-        }
         .onChange(of: appManager.deepLinkTarget) { _, newValue in
             if let newValue = newValue {
                 selection = newValue
@@ -52,11 +51,6 @@ struct TabsView: View {
 
 //#Preview {
 //    let appManager = AppManagerFactory.makeTesting()
-//    return TabsView()
+//    return TabsView(appManager: appManager)
 //        .environment(appManager)
-//        .onAppear {
-//            Task {
-//                await appManager.appLaunched()
-//            }
-//        }
 //}

@@ -46,7 +46,7 @@ final class Log {
         if isLoggingEnabled {
             Swift.print(
                 """
-                \(AppDateFormatter.format(Date(), style: .withTime)) 
+                \(AppDateFormatter.format(Date(), style: .withMilliseconds)) 
                 \(LogEvent.error.rawValue)[\(sourceFileName(filePath: filename))] 
                 Line: \(line) Func Name: \(funcName) \n\t-> \(object)
                 """
@@ -64,7 +64,7 @@ final class Log {
     ///   - funcName: Name of the function from where the logging is done
     static func info( _ object: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {
         if isLoggingEnabled {
-            Swift.print("\(AppDateFormatter.format(Date(), style: .withTime)) \(LogEvent.info.rawValue)[\(sourceFileName(filePath: filename))] Line: \(line) Func Name: \(funcName) \n\t-> \(object)")
+            Swift.print("\(AppDateFormatter.format(Date(), style: .withMilliseconds)) \(LogEvent.info.rawValue)[\(sourceFileName(filePath: filename))] Line: \(line) Func Name: \(funcName) \n\t-> \(object)")
         }
     }
 
@@ -78,7 +78,7 @@ final class Log {
     ///   - funcName: Name of the function from where the logging is done
     static func debug( _ object: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {
         if isLoggingEnabled {
-            Swift.print("\(AppDateFormatter.format(Date(), style: .withTime)) \(LogEvent.debug.rawValue)[\(sourceFileName(filePath: filename))] Line: \(line) Func Name: \(funcName) \n\t-> \(object)")
+            Swift.print("\(AppDateFormatter.format(Date(), style: .withMilliseconds)) \(LogEvent.debug.rawValue)[\(sourceFileName(filePath: filename))] Line: \(line) Func Name: \(funcName) \n\t-> \(object)")
         }
     }
 
@@ -92,7 +92,7 @@ final class Log {
     ///   - funcName: Name of the function from where the logging is done
     static func warning( _ object: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {
         if isLoggingEnabled {
-            Swift.print("\(AppDateFormatter.format(Date(), style: .withTime)) \(LogEvent.warning.rawValue)[\(sourceFileName(filePath: filename))] Line: \(line) Func Name: \(funcName) \n\t-> \(object)")
+            Swift.print("\(AppDateFormatter.format(Date(), style: .withMilliseconds)) \(LogEvent.warning.rawValue)[\(sourceFileName(filePath: filename))] Line: \(line) Func Name: \(funcName) \n\t-> \(object)")
         }
     }
 
@@ -106,7 +106,7 @@ final class Log {
     ///   - funcName: Name of the function from where the logging is done
     static func severe( _ object: Any, filename: String = #file, line: Int = #line, funcName: String = #function) {
         if isLoggingEnabled {
-            Swift.print("\(AppDateFormatter.format(Date(), style: .withTime)) \(LogEvent.severe.rawValue)[\(sourceFileName(filePath: filename))] Line: \(line) Func Name: \(funcName) \n\t-> \(object)")
+            Swift.print("\(AppDateFormatter.format(Date(), style: .withMilliseconds)) \(LogEvent.severe.rawValue)[\(sourceFileName(filePath: filename))] Line: \(line) Func Name: \(funcName) \n\t-> \(object)")
         }
     }
 
