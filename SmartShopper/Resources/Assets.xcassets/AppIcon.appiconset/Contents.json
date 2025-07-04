@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "shopIcon.png",
+      "filename" : "appIcon-1024x1024@2x.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,7 +13,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "shopIcon 1.png",
+      "filename" : "appIcon-iOS-Dark-1024x1024@2x.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -25,7 +25,7 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "shopIcon 2.png",
+      "filename" : "appIcon-iOS-TintedLight-1024x1024@2x.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"

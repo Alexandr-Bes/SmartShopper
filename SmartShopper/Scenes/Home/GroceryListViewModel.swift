@@ -21,20 +21,21 @@ protocol GroceryListViewModelProtocol: Observable {
 
 @Observable
 final class GroceryListViewModel: GroceryListViewModelProtocol {
-    var items: [GroceryItem]
+
+    var items: [GroceryItem] = []
     var selectedStore = GroceryStore(name: "")
     var sortOption: GroceryItemsSortType = .category
 
     private var repository: GroceryRepositoryProtocol?
 
-//    init(repository: GroceryRepositoryProtocol,
-//         items: [GroceryItem] = []) {
-//        self.repository = repository
-//        self.items = items
-//    }
-
     init(items: [GroceryItem] = []) {
         self.items = items
+    }
+
+    init(appManager: AppManager) {
+        self.selectedStore = appManager.currentStore
+        self.repository = appManager.groceryRepository
+        loadItems()
     }
 
     func bind(to appManager: AppManager) {
@@ -42,7 +43,6 @@ final class GroceryListViewModel: GroceryListViewModelProtocol {
         repository = appManager.groceryRepository
         loadItems()
 
-        // Observe current store changes
         withObservationTracking {
             _ = appManager.currentStore
         } onChange: { [weak self, weak appManager] in

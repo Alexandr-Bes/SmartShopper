@@ -53,8 +53,10 @@ struct HomeView<ViewModel: GroceryListViewModelProtocol>: View {
     @ViewBuilder var listView: some View {
         List {
             ForEach(viewModel.items, id: \.id) { item in
-                GroceryItemRow(item: item) {
-                    viewModel.toggleItem(item)
+                Section(header: Text(item.category.rawValue)) {
+                    GroceryItemRow(item: item) {
+                        viewModel.toggleItem(item)
+                    }
                 }
             }
         }

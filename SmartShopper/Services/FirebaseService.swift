@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import FirebaseCore
 
 protocol FetchDataService {
     func fetchData<T: Decodable>(from url: URL, completion: @escaping (Result<T, Error>) -> Void)
@@ -15,7 +14,7 @@ protocol FetchDataService {
 
 final class FirebaseService: FetchDataService {
     static func setup() {
-        FirebaseApp.configure()
+//        FirebaseApp.configure()
     }
 
     func fetchData<T: Decodable>(from url: URL, completion: @escaping (Result<T, Error>) -> Void) {

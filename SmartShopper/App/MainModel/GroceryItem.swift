@@ -54,9 +54,7 @@ extension GroceryItem {
         self.init(id: source.id,
                   name: source.name,
                   category: GroceryItemCategory(rawValue: source.categoryRaw) ?? .unCategorized,
-                  stores: source.stores.map {
-            GroceryStore(id: $0.id, name: $0.name, location: $0.location, icon: $0.icon)
-        },
+                  stores: source.stores.map { GroceryStore(from: $0) },
                   isBought: source.isBought,
                   sortIndex: source.sortIndex)
     }
@@ -73,6 +71,13 @@ struct GroceryStore: Identifiable, Equatable, Comparable, Hashable {
         self.name = name
         self.location = location
         self.icon = icon
+    }
+
+    init(from dto: any GroceryStoreStorable) {
+        self.id = dto.id
+        self.name = dto.name
+        self.location = dto.location
+        self.icon = dto.icon
     }
 
     static func == (lhs: GroceryStore, rhs: GroceryStore) -> Bool {
