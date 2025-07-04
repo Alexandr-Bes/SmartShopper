@@ -20,6 +20,16 @@ final class SwiftDataGroceryItem {
 
     var stores: [SwiftDataGroceryStore]
 
+    init(from item: GroceryItem) {
+        self.id = item.id
+        self.name = item.name
+        self.category = item.category.rawValue //TODO: - Check if this works properly (same string lowercased, etc.)
+        self.isBought = item.isBought
+        self.sortIndex = item.sortIndex
+        #warning("Grocery stores doesn't get stored")
+        self.stores = [] //item.stores //TODO: - Add mapper
+    }
+
     init(id: String = UUID().uuidString,
          name: String,
          category: String,
@@ -35,25 +45,13 @@ final class SwiftDataGroceryItem {
         self.sortIndex = sortIndex
         self.stores = stores
     }
-}
 
-// MARK: - Grocery Item Storable
-extension SwiftDataGroceryItem: GroceryItemStorable {
-    typealias StoreType = SwiftDataGroceryStore
-    var icon: String? { nil } // For now
-    var categoryRaw: String { category }
-}
-
-// MARK: - Init from Grocery Item
-extension SwiftDataGroceryItem {
-    convenience init(from item: GroceryItemProtocol) {
-        self.init(
-            id: item.id,
-            name: item.name,
-            category: item.category.rawValue,
-            isBought: item.isBought,
-            sortIndex: item.sortIndex,
-            stores: item.stores.map { StoreType(id: $0.id, name: $0.name, location: $0.location, icon: $0.icon) }
-        )
+    func toDomainModel() -> GroceryItem {
+        GroceryItem(id: id,
+                    name: name,
+                    category: GroceryItemCategory(rawValue: category) ?? .unCategorized,
+                    stores: stores.map { GroceryStore(id: $0.id, name: $0.name) },
+                    isBought: isBought,
+                    sortIndex: sortIndex)
     }
 }

@@ -7,17 +7,7 @@
 
 import Foundation
 
-protocol GroceryItemProtocol {
-    var id: String { get }
-    var name: String { get }
-    var category: GroceryItemCategory { get }
-    var stores: [GroceryStore] { get }
-    var isBought: Bool { get set }
-    var sortIndex: Int? { get set }
-    var emoji: String? { get }
-}
-
-struct GroceryItem: GroceryItemProtocol, Identifiable, Equatable {
+struct GroceryItem: Identifiable, Sendable, Equatable {
     let id: String
     let name: String
     let category: GroceryItemCategory
@@ -48,18 +38,6 @@ struct GroceryItem: GroceryItemProtocol, Identifiable, Equatable {
     }
 }
 
-// MARK: Init from Grocery Item Storable
-extension GroceryItem {
-    init(from source: any GroceryItemStorable) {
-        self.init(id: source.id,
-                  name: source.name,
-                  category: GroceryItemCategory(rawValue: source.categoryRaw) ?? .unCategorized,
-                  stores: source.stores.map { GroceryStore(from: $0) },
-                  isBought: source.isBought,
-                  sortIndex: source.sortIndex)
-    }
-}
-
 struct GroceryStore: Identifiable, Equatable, Comparable, Hashable {
     let id: String
     let name: String
@@ -71,13 +49,6 @@ struct GroceryStore: Identifiable, Equatable, Comparable, Hashable {
         self.name = name
         self.location = location
         self.icon = icon
-    }
-
-    init(from dto: any GroceryStoreStorable) {
-        self.id = dto.id
-        self.name = dto.name
-        self.location = dto.location
-        self.icon = dto.icon
     }
 
     static func == (lhs: GroceryStore, rhs: GroceryStore) -> Bool {
@@ -129,23 +100,4 @@ enum GroceryItemCategory: String, CaseIterable, Comparable {
 enum GroceryItemsSortType {
     case name
     case category
-}
-
-protocol GroceryItemStorable: TimestampedStorable {
-    associatedtype StoreType: GroceryStoreStorable
-
-    var id: String { get }
-    var name: String { get }
-    var icon: String? { get }
-    var categoryRaw: String { get }
-    var stores: [StoreType] { get }
-    var isBought: Bool { get }
-    var sortIndex: Int? { get }
-}
-
-protocol GroceryStoreStorable: TimestampedStorable {
-    var id: String { get }
-    var name: String { get }
-    var icon: String? { get }
-    var location: String? { get } // TODO: - longitude/latitude
 }

@@ -10,32 +10,26 @@ import SwiftData
 
 final class PreviewMockedDataSource: GroceryDataSourceProtocol {
 
-    private let modelContext: ModelContext
+    private var store: [GroceryItem]
 
-    init(context: ModelContext) {
-        self.modelContext = context
+    init(initial: [GroceryItem] = []) {
+        self.store = initial
     }
 
-    @MainActor
-    func fetchItems() throws -> [any GroceryItemStorable] {
-        let descriptor = FetchDescriptor<SwiftDataGroceryItem>()
-        let result = try modelContext.fetch(descriptor)
-        return result
+    func fetchItems() async throws -> [GroceryItem] {
+        store
     }
 
-    func updateItem(_ item: any GroceryItemProtocol) async throws {
-        Log.debug("Update item: \(item)")
+    func updateItem(_ item: GroceryItem) async throws {
+        guard let index = store.firstIndex(where: { $0.id == item.id }) else { return }
+        store[index] = item
     }
 
-    func updateItems(_ items: [any GroceryItemProtocol]) async throws {
-        Log.debug(items.map(\.name))
+    func deleteItems(ids: [String]) async throws {
+        store.removeAll { ids.contains($0.id) }
     }
 
-    func deleteItems(with ids: [String]) async throws {
-        Log.debug(ids)
-    }
-    
-    func setDefaultItemsIfNeeded(_ items: [any GroceryItemProtocol]) async throws {
-        Log.debug("setDefaultItemsIfNeeded")
+    func setDefaultItemsIfNeeded(_ items: [GroceryItem]) async throws {
+        store.append(contentsOf: items)
     }
 }

@@ -57,7 +57,7 @@ enum AppManagerFactory {
         let preview = PreviewModelContainer()
         preview.addExamples()
         let context = preview.context
-        let dataSource = PreviewMockedDataSource(context: context)
+        let dataSource = PreviewMockedDataSource(initial: mockItems)
         return AppManager(context: context, dataSource: dataSource)
     }
 }

@@ -38,5 +38,3 @@ final class SwiftDataGroceryStore: Hashable, Equatable {
         lhs.id == rhs.id
     }
 }
-
-extension SwiftDataGroceryStore: GroceryStoreStorable { }

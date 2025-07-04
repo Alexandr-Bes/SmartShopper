@@ -22,50 +22,33 @@ final class SwiftDataGroceryDataSource: GroceryDataSourceProtocol {
         self.localStorage = localStorage
     }
 
-    func fetchItems() async throws -> [SwiftDataGroceryItem] {
+    func fetchItems() async throws -> [GroceryItem] {
         let descriptor = FetchDescriptor<SwiftDataGroceryItem>()
         let result = try context.fetch(descriptor)
-        return result
+        return result.map { $0.toDomainModel() }
     }
 
-    func fetchItems() async throws -> [any GroceryItemStorable] {
-        let descriptor = FetchDescriptor<SwiftDataGroceryItem>()
-        let result = try context.fetch(descriptor)
-        return result
-    }
-
-    func updateItem(_ item: any GroceryItemProtocol) async throws {
+    func updateItem(_ item: GroceryItem) async throws {
         let itemId = item.id
         let descriptor = FetchDescriptor<SwiftDataGroceryItem>(
             predicate: #Predicate { $0.id == itemId }
         )
-        guard let storedItem = try context.fetch(descriptor).first else {
+        guard let model = try context.fetch(descriptor).first else {
             Log.error("Can't find item: \(item)")
             return
         }
 
         //TODO: updating other values as well
-        storedItem.isBought = item.isBought
+        model.isBought = item.isBought
 //        storedItem.category = item.category
 //        storedItem.sortIndex = item.sortIndex
 //        storedItem.stores = item.stores
 //        storedItem.updatedAt = Date()
-        do {
-            try context.save()
-        } catch {
-            Log.error("Can't update item: \(item). Error: \(error)")
-        }
+
+        try context.save()
     }
 
-    func updateItems(_ items: [any GroceryItemProtocol]) async throws {
-        do {
-            try context.save()
-        } catch {
-            Log.debug(error)
-        }
-    }
-
-    func deleteItems(with ids: [String]) async throws {
+    func deleteItems(ids: [String]) async throws {
         for id in ids {
             let descriptor = FetchDescriptor<SwiftDataGroceryItem>(
                 predicate: #Predicate { $0.id == id }
@@ -77,7 +60,7 @@ final class SwiftDataGroceryDataSource: GroceryDataSourceProtocol {
         try context.save()
     }
     
-    func setDefaultItemsIfNeeded(_ items: [any GroceryItemProtocol]) async throws {
+    func setDefaultItemsIfNeeded(_ items: [GroceryItem]) async throws {
         guard !didSeedDefaults else { return }
         for item in items {
             let entity = SwiftDataGroceryItem(from: item)

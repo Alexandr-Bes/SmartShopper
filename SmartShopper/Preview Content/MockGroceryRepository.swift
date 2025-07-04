@@ -8,19 +8,16 @@
 import Foundation
 
 final class MockGroceryRepository: GroceryRepositoryProtocol {
+
     func getItems() async throws -> [GroceryItem] {
         mockItems
     }
-    
-    func updateItem(_ item: any GroceryItemProtocol) async throws {
+
+    func updateItem(_ item: GroceryItem) async throws {
         Log.debug("Update item: \(item)")
     }
-    
-    func updateItems(_ items: [GroceryItem]) async throws {
-        Log.debug("Update items: \(items)")
-    }
-    
-    func deleteItems(_ ids: [String]) {
+
+    func deleteItems(_ ids: [String]) async throws {
         Log.debug("Delete items ids: \(ids)")
     }
 }

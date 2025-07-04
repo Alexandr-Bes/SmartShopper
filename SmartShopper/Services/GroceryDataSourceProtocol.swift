@@ -7,10 +7,9 @@
 
 import Foundation
 
-protocol GroceryDataSourceProtocol {
-    func fetchItems() async throws -> [any GroceryItemStorable]
-    func updateItem(_ item: any GroceryItemProtocol) async throws
-    func updateItems(_ items: [any GroceryItemProtocol]) async throws
-    func deleteItems(with ids: [String]) async throws
-    func setDefaultItemsIfNeeded(_ items: [any GroceryItemProtocol]) async throws
+protocol GroceryDataSourceProtocol: Sendable {
+    func fetchItems() async throws -> [GroceryItem]
+    func updateItem(_ item: GroceryItem) async throws
+    func deleteItems(ids: [String]) async throws
+    func setDefaultItemsIfNeeded(_ items: [GroceryItem]) async throws
 }

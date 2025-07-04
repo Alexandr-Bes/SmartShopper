@@ -22,7 +22,8 @@ struct TabsView: View {
 
     init(appManager: AppManager) {
         _groceryListViewModel = State(
-            wrappedValue: GroceryListViewModel(currentStore: appManager.currentStore, repository: appManager.groceryRepository)
+            wrappedValue: GroceryListViewModel(currentStore: appManager.currentStore,
+                                               repository: appManager.groceryRepository)
         )
     }
 
@@ -49,8 +50,8 @@ struct TabsView: View {
     }
 }
 
-//#Preview {
-//    let appManager = AppManagerFactory.makeTesting()
-//    return TabsView(appManager: appManager)
-//        .environment(appManager)
-//}
+#Preview {
+    let appManager = AppManagerFactory.makeTesting()
+    return TabsView(appManager: appManager)
+        .environment(appManager)
+}

@@ -9,8 +9,7 @@ import Foundation
 
 protocol GroceryRepositoryProtocol {
     func getItems() async throws -> [GroceryItem]
-    func updateItem(_ item: GroceryItemProtocol) async throws
-    func updateItems(_ items: [GroceryItem]) async throws
+    func updateItem(_ item: GroceryItem) async throws
     func deleteItems(_ ids: [String]) async throws
 }
 
@@ -23,22 +22,16 @@ final class GroceryRepository: GroceryRepositoryProtocol {
     }
 
     func getItems() async throws -> [GroceryItem] {
-        let storedItems = try await dataSource.fetchItems() // loadMockItems()
-        let groceryItems = storedItems.compactMap { GroceryItem(from: $0) }
-        return groceryItems
+        try await dataSource.fetchItems()
     }
 
-    func updateItem(_ item: GroceryItemProtocol) async throws {
+    func updateItem(_ item: GroceryItem) async throws {
         try await dataSource.updateItem(item)
-    }
-
-    func updateItems(_ items: [GroceryItem]) async throws {
-        try await dataSource.updateItems(items)
     }
 
     func deleteItems(_ ids: [String]) async throws {
         ids.forEach { Log.debug("Deleting item with id: \($0)") }
-        try await dataSource.deleteItems(with: ids)
+        try await dataSource.deleteItems(ids: ids)
     }
 }
 
