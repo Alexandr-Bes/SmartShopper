@@ -12,50 +12,70 @@ struct HomeView<ViewModel: GroceryListViewModelProtocol>: View {
 
     var body: some View {
         VStack {
-            storePickerView
-
-            sortItemsView
-
             if viewModel.items.isEmpty {
                 ProgressView()
             }
 
             listView
         }
+        .navigationTitle("List")
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                storePickerView
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                sortItemsView
+            }
+        }
     }
 
     @ViewBuilder var storePickerView: some View {
-        Picker("Store", selection: $viewModel.selectedStore) {
-            ForEach(mockStores, id: \.self) {
-                Text($0.name)
-                    .tag($0)
+        Menu {
+            ForEach(viewModel.stores, id: \.id) { store in
+                Button {
+                    viewModel.selectedStore = store
+                    viewModel.filterByStore()
+                } label: {
+                    if viewModel.selectedStore == store {
+                        Label(store.name, systemImage: "checkmark")
+                    } else {
+                        Text(store.name)
+                    }
+                }
             }
+        } label: {
+            Image(systemName: "storefront")
+                .foregroundStyle(.yellow)
         }
-        .pickerStyle(.segmented)
-        .onChange(of: viewModel.selectedStore) { oldValue, newValue in
-            Log.debug("Selected store changed from: \(oldValue) to \(newValue)")
-        }
-        .padding(.horizontal)
     }
 
     @ViewBuilder var sortItemsView: some View {
-        Picker("Sort by", selection: $viewModel.sortOption) {
-            Text("Name").tag(GroceryItemsSortType.name)
-            Text("Category").tag(GroceryItemsSortType.category)
+        Menu {
+            ForEach(GroceryItemsSortType.allCases, id: \.self) { choice in
+                Button {
+                    viewModel.sortOption = choice
+                    viewModel.sortItems()
+                } label: {
+                    if viewModel.sortOption == choice {
+                        Label(choice.title, systemImage: "checkmark")
+                    } else {
+                        Text(choice.title)
+                    }
+                }
+            }
+        } label: {
+            Image(systemName: "ellipsis")
         }
-        .pickerStyle(.menu)
-        .onChange(of: viewModel.sortOption) {
-            viewModel.sortItems()
-        }
-        .padding()
     }
 
     @ViewBuilder var listView: some View {
         List {
-            ForEach(viewModel.items, id: \.id) { item in
-                Section(header: Text(item.category.rawValue)) {
-                    GroceryItemRow(item: item) {
-                        viewModel.toggleItem(item)
+            ForEach(viewModel.categorizedItems, id: \.category) { categoryGroup in
+                Section(header: Text(categoryGroup.category.rawValue.capitalized)) {
+                    ForEach(categoryGroup.items, id: \.id) { item in
+                        GroceryItemRow(item: item) {
+                            viewModel.toggleItem(item)
+                        }
                     }
                 }
             }

@@ -43,16 +43,21 @@ struct GroceryStore: Identifiable, Equatable, Comparable, Hashable {
     let name: String
     let location: String? // TODO: - longitude/latitude ?
     let icon: String?
+    let selected: Bool
 
-    init(id: String = UUID().uuidString, name: String, location: String? = nil, icon: String? = nil) {
+    init(id: String = UUID().uuidString, name: String,
+         location: String? = nil, icon: String? = nil,
+         selected: Bool = false) {
         self.id = id
         self.name = name
         self.location = location
         self.icon = icon
+        self.selected = selected
     }
 
     static func == (lhs: GroceryStore, rhs: GroceryStore) -> Bool {
-        lhs.id == rhs.id
+//        lhs.id == rhs.id
+        lhs.name == rhs.name
     }
 
     static func < (lhs: GroceryStore, rhs: GroceryStore) -> Bool {
@@ -97,7 +102,14 @@ enum GroceryItemCategory: String, CaseIterable, Comparable {
     }
 }
 
-enum GroceryItemsSortType {
+enum GroceryItemsSortType: CaseIterable {
     case name
     case category
+
+    var title: String {
+        switch self {
+        case .name: return "Name"
+        case .category: return "Category"
+        }
+    }
 }

@@ -11,6 +11,7 @@ protocol EmojiProviderProtocol {
     static func emoji(for name: String) -> String?
 }
 
+//TODO: - Is it efficient to always look for first(where: ...)
 struct EmojiProvider: EmojiProviderProtocol {
     static func emoji(for name: String) -> String? {
         let key = name.lowercased().trimmingCharacters(in: .whitespaces)

@@ -19,29 +19,41 @@ struct TabsView: View {
 
     @State private var selection: TabTarget = .list
     @State private var groceryListViewModel: GroceryListViewModel
+    @State private var searchQuery: String = ""
 
     init(appManager: AppManager) {
         _groceryListViewModel = State(
-            wrappedValue: GroceryListViewModel(currentStore: appManager.currentStore,
-                                               repository: appManager.groceryRepository)
+            wrappedValue: GroceryListViewModel(repository: appManager.groceryRepository)
         )
     }
 
     var body: some View {
         TabView {
-            HomeView(viewModel: groceryListViewModel)
-                .tabItem { Label("List", systemImage: "list.bullet") }
-                .tag(TabTarget.list)
+            Tab("List", systemImage: "list.bullet") {
+                NavigationStack {
+                    HomeView(viewModel: groceryListViewModel)
+                        .tag(TabTarget.list)
+                        .toolbarBackground(.blue)
+                }
+            }
 
-            ReorderItemsView(viewModel: groceryListViewModel)
-                .tabItem { Label("Order", systemImage: "arrow.up.arrow.down") }
-                .tag(TabTarget.order)
+            Tab("Order", systemImage: "arrow.up.arrow.down") {
+                ReorderItemsView(viewModel: groceryListViewModel)
+                    .tag(TabTarget.order)
+            }
 
-            ManageItemsView(viewModel: groceryListViewModel)
-                .tabItem { Label("Manage", systemImage: "plus.circle") }
-                .tag(TabTarget.manage)
+            Tab("Manage", systemImage: "plus.circle") {
+                ManageItemsView(viewModel: groceryListViewModel)
+                    .tag(TabTarget.manage)
+            }
+
+            Tab(role: .search) {
+                Image(systemName: "globe")
+            }
+
         }
-        .tabBarMinimizeBehavior(.onScrollDown)
+        .searchable(text: $searchQuery)
+        .tabBarMinimizeBehavior(.automatic)
         .onChange(of: appManager.deepLinkTarget) { _, newValue in
             if let newValue = newValue {
                 selection = newValue

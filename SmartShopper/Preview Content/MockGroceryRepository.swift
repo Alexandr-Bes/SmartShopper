@@ -9,6 +9,10 @@ import Foundation
 
 final class MockGroceryRepository: GroceryRepositoryProtocol {
 
+    func getSelectedStore() -> GroceryStore {
+        return GroceryStore(name: "Pingo")
+    }
+
     func getItems() async throws -> [GroceryItem] {
         mockItems
     }

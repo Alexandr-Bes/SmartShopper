@@ -8,6 +8,7 @@
 import Foundation
 
 protocol GroceryRepositoryProtocol {
+    func getSelectedStore() -> GroceryStore
     func getItems() async throws -> [GroceryItem]
     func updateItem(_ item: GroceryItem) async throws
     func deleteItems(_ ids: [String]) async throws
@@ -19,6 +20,11 @@ final class GroceryRepository: GroceryRepositoryProtocol {
 
     init(dataSource: GroceryDataSourceProtocol) {
         self.dataSource = dataSource
+    }
+
+    //TODO: - From location / Last selected
+    func getSelectedStore() -> GroceryStore {
+        return mockStores.first(where: { $0.selected }) ?? mockStores.first!
     }
 
     func getItems() async throws -> [GroceryItem] {
@@ -49,7 +55,7 @@ private extension GroceryRepository {
         return result
     }
 }
-
+/*
 extension GroceryRepository {
     func setDefaults(using map: [String: String], store: GroceryStore) async {
         let items: [GroceryItem] = map.map { name, emoji in
@@ -58,10 +64,10 @@ extension GroceryRepository {
         try? await (dataSource as? SwiftDataGroceryDataSource)?.setDefaultItemsIfNeeded(items)
     }
 }
-
+*/
 // MARK: - MOCKS
 
-let mockStores: [GroceryStore] = [GroceryStore(name: "Pingo Doce"),
+let mockStores: [GroceryStore] = [GroceryStore(name: "Pingo Doce", selected: true),
                                   GroceryStore(name: "Continente")]
 let mockItems = [
     GroceryItem(name: "Milk", category: .drinks, stores: [mockStores.first!]),
@@ -69,5 +75,6 @@ let mockItems = [
     GroceryItem(name: "Apples", category: .fruits, stores: mockStores),
     GroceryItem(name: "Oranges", category: .fruits, stores: mockStores),
     GroceryItem(name: "Chicken", category: .meat, stores: mockStores),
-    GroceryItem(name: "Eggs", category: .meat, stores: mockStores)
+    GroceryItem(name: "Eggs", category: .meat, stores: mockStores),
+    GroceryItem(name: "Salmon", category: .fish, stores: [mockStores[1]])
 ]

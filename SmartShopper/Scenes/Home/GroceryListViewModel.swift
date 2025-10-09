@@ -10,28 +10,50 @@ import Combine
 
 protocol GroceryListViewModelProtocol: Observable {
     var items: [GroceryItem] { get set }
+    var categorizedItems: [(category: GroceryItemCategory, items: [GroceryItem])] { get }
     var selectedStore: GroceryStore { get set }
+    var stores: [GroceryStore] { get set }
     var sortOption: GroceryItemsSortType { get set }
 
     func loadItems() async
     func toggleItem(_ item: GroceryItem)
     func addItem(_ item: GroceryItem)
     func sortItems()
+    func filterByStore()
 }
 
 @Observable
 final class GroceryListViewModel: GroceryListViewModelProtocol {
 
     var items: [GroceryItem] = []
-    var selectedStore = GroceryStore(name: "")
+
+    var categorizedItems: [(category: GroceryItemCategory, items: [GroceryItem])] {
+        let filteredItems = isStoreFilterEnabled
+            ? items.filter { $0.stores.contains(selectedStore) }
+            : items
+
+        switch sortOption {
+        case .category:
+            let grouped = Dictionary(grouping: filteredItems) { $0.category }
+            return grouped
+                .map { (category: $0.key, items: $0.value.sorted { $0.name < $1.name }) }
+                .sorted { $0.category < $1.category }
+        case .name:
+            return [(category: .unCategorized, items: filteredItems.sorted { $0.name < $1.name })]
+        }
+
+    }
+
+    var selectedStore: GroceryStore
     var sortOption: GroceryItemsSortType = .category
-    var stores: [GroceryStore] = mockStores
+    var stores: [GroceryStore] = mockStores // Pass to View
 
     private let repository: any GroceryRepositoryProtocol
+    private var isStoreFilterEnabled: Bool = false // Enables after user's action
 
-    init(currentStore: GroceryStore, repository: any GroceryRepositoryProtocol) {
-        self.selectedStore = currentStore
+    init(repository: any GroceryRepositoryProtocol) {
         self.repository = repository
+        self.selectedStore = repository.getSelectedStore()
         loadItems()
     }
 
@@ -39,6 +61,7 @@ final class GroceryListViewModel: GroceryListViewModelProtocol {
     init(items: [GroceryItem]) {
         self.items = items
         self.repository = MockGroceryRepository()
+        self.selectedStore = mockStores.first!
     }
 
     func loadItems() {
@@ -69,12 +92,21 @@ final class GroceryListViewModel: GroceryListViewModelProtocol {
         case .name:
             items.sort { $0.name < $1.name }
         case .category:
-            items.sort { $0.category < $1.category }
+            items.sort {
+                if $0.category == $1.category {
+                    return $0.name < $1.name
+                }
+                return $0.category < $1.category
+            }
         }
     }
 
     func addItem(_ item: GroceryItem) {
         items.append(item)
+    }
+
+    func filterByStore() {
+        isStoreFilterEnabled = true
     }
 }
 
