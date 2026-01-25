@@ -6,6 +6,41 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1C7831232F26AD3A00AFD7F5 /* GroceryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7830F12F26AD3A00AFD7F5 /* GroceryItem.swift */; };
+		1C7831242F26AD3A00AFD7F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7830F32F26AD3A00AFD7F5 /* AppDelegate.swift */; };
+		1C7831252F26AD3A00AFD7F5 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7830F42F26AD3A00AFD7F5 /* AppManager.swift */; };
+		1C7831262F26AD3A00AFD7F5 /* SmartShopperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7830F52F26AD3A00AFD7F5 /* SmartShopperApp.swift */; };
+		1C7831272F26AD3A00AFD7F5 /* CheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7830F72F26AD3A00AFD7F5 /* CheckboxView.swift */; };
+		1C7831282F26AD3A00AFD7F5 /* DateFormatter+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7830F92F26AD3A00AFD7F5 /* DateFormatter+ext.swift */; };
+		1C7831292F26AD3A00AFD7F5 /* MockGroceryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7830FB2F26AD3A00AFD7F5 /* MockGroceryRepository.swift */; };
+		1C78312A2F26AD3A00AFD7F5 /* PreviewMockedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7830FD2F26AD3A00AFD7F5 /* PreviewMockedData.swift */; };
+		1C78312B2F26AD3A00AFD7F5 /* PreviewModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7830FE2F26AD3A00AFD7F5 /* PreviewModelContainer.swift */; };
+		1C78312C2F26AD3A00AFD7F5 /* GroceryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7831002F26AD3A00AFD7F5 /* GroceryRepository.swift */; };
+		1C78312D2F26AD3A00AFD7F5 /* GroceryItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7831052F26AD3A00AFD7F5 /* GroceryItemRow.swift */; };
+		1C78312E2F26AD3A00AFD7F5 /* GroceryListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7831062F26AD3A00AFD7F5 /* GroceryListViewModel.swift */; };
+		1C78312F2F26AD3A00AFD7F5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7831072F26AD3A00AFD7F5 /* HomeView.swift */; };
+		1C7831302F26AD3A00AFD7F5 /* ManageItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7831092F26AD3A00AFD7F5 /* ManageItemsView.swift */; };
+		1C7831312F26AD3A00AFD7F5 /* ReorderItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C78310B2F26AD3A00AFD7F5 /* ReorderItemsView.swift */; };
+		1C7831322F26AD3A00AFD7F5 /* TabsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C78310D2F26AD3A00AFD7F5 /* TabsView.swift */; };
+		1C7831332F26AD3A00AFD7F5 /* KeyValueStorageKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7831102F26AD3A00AFD7F5 /* KeyValueStorageKey.swift */; };
+		1C7831342F26AD3A00AFD7F5 /* LocalStorageAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7831112F26AD3A00AFD7F5 /* LocalStorageAdapter.swift */; };
+		1C7831352F26AD3A00AFD7F5 /* UserDefaultsStorageAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7831122F26AD3A00AFD7F5 /* UserDefaultsStorageAdapter.swift */; };
+		1C7831362F26AD3A00AFD7F5 /* SwiftDataGroceryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7831142F26AD3A00AFD7F5 /* SwiftDataGroceryItem.swift */; };
+		1C7831372F26AD3A00AFD7F5 /* SwiftDataGroceryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7831152F26AD3A00AFD7F5 /* SwiftDataGroceryStore.swift */; };
+		1C7831382F26AD3A00AFD7F5 /* ModelContainerProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7831172F26AD3A00AFD7F5 /* ModelContainerProvider.swift */; };
+		1C7831392F26AD3A00AFD7F5 /* SwiftDataGroceryDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7831182F26AD3A00AFD7F5 /* SwiftDataGroceryDataSource.swift */; };
+		1C78313A2F26AD3A00AFD7F5 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C78311A2F26AD3A00AFD7F5 /* FirebaseService.swift */; };
+		1C78313B2F26AD3A00AFD7F5 /* GroceryDataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C78311B2F26AD3A00AFD7F5 /* GroceryDataSourceProtocol.swift */; };
+		1C78313C2F26AD3A00AFD7F5 /* AppDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C78311D2F26AD3A00AFD7F5 /* AppDateFormatter.swift */; };
+		1C78313D2F26AD3A00AFD7F5 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C78311E2F26AD3A00AFD7F5 /* AppLogger.swift */; };
+		1C78313E2F26AD3A00AFD7F5 /* EmojiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C78311F2F26AD3A00AFD7F5 /* EmojiProvider.swift */; };
+		1C78313F2F26AD3A00AFD7F5 /* GroceryEmojiMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7831202F26AD3A00AFD7F5 /* GroceryEmojiMap.swift */; };
+		1C7831402F26AD3A00AFD7F5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C7830FC2F26AD3A00AFD7F5 /* Preview Assets.xcassets */; };
+		1C7831412F26AD3A00AFD7F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C7831022F26AD3A00AFD7F5 /* Assets.xcassets */; };
+		1C7831422F26AD3A00AFD7F5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1C7831032F26AD3A00AFD7F5 /* GoogleService-Info.plist */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		1CBC44732DC8CD42001A3418 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,17 +59,44 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C7830F12F26AD3A00AFD7F5 /* GroceryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryItem.swift; sourceTree = "<group>"; };
+		1C7830F32F26AD3A00AFD7F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1C7830F42F26AD3A00AFD7F5 /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
+		1C7830F52F26AD3A00AFD7F5 /* SmartShopperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartShopperApp.swift; sourceTree = "<group>"; };
+		1C7830F72F26AD3A00AFD7F5 /* CheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxView.swift; sourceTree = "<group>"; };
+		1C7830F92F26AD3A00AFD7F5 /* DateFormatter+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+ext.swift"; sourceTree = "<group>"; };
+		1C7830FB2F26AD3A00AFD7F5 /* MockGroceryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGroceryRepository.swift; sourceTree = "<group>"; };
+		1C7830FC2F26AD3A00AFD7F5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1C7830FD2F26AD3A00AFD7F5 /* PreviewMockedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewMockedData.swift; sourceTree = "<group>"; };
+		1C7830FE2F26AD3A00AFD7F5 /* PreviewModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewModelContainer.swift; sourceTree = "<group>"; };
+		1C7831002F26AD3A00AFD7F5 /* GroceryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryRepository.swift; sourceTree = "<group>"; };
+		1C7831022F26AD3A00AFD7F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1C7831032F26AD3A00AFD7F5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1C7831052F26AD3A00AFD7F5 /* GroceryItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryItemRow.swift; sourceTree = "<group>"; };
+		1C7831062F26AD3A00AFD7F5 /* GroceryListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryListViewModel.swift; sourceTree = "<group>"; };
+		1C7831072F26AD3A00AFD7F5 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		1C7831092F26AD3A00AFD7F5 /* ManageItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageItemsView.swift; sourceTree = "<group>"; };
+		1C78310B2F26AD3A00AFD7F5 /* ReorderItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderItemsView.swift; sourceTree = "<group>"; };
+		1C78310D2F26AD3A00AFD7F5 /* TabsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabsView.swift; sourceTree = "<group>"; };
+		1C7831102F26AD3A00AFD7F5 /* KeyValueStorageKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueStorageKey.swift; sourceTree = "<group>"; };
+		1C7831112F26AD3A00AFD7F5 /* LocalStorageAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStorageAdapter.swift; sourceTree = "<group>"; };
+		1C7831122F26AD3A00AFD7F5 /* UserDefaultsStorageAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorageAdapter.swift; sourceTree = "<group>"; };
+		1C7831142F26AD3A00AFD7F5 /* SwiftDataGroceryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataGroceryItem.swift; sourceTree = "<group>"; };
+		1C7831152F26AD3A00AFD7F5 /* SwiftDataGroceryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataGroceryStore.swift; sourceTree = "<group>"; };
+		1C7831172F26AD3A00AFD7F5 /* ModelContainerProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelContainerProvider.swift; sourceTree = "<group>"; };
+		1C7831182F26AD3A00AFD7F5 /* SwiftDataGroceryDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataGroceryDataSource.swift; sourceTree = "<group>"; };
+		1C78311A2F26AD3A00AFD7F5 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		1C78311B2F26AD3A00AFD7F5 /* GroceryDataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryDataSourceProtocol.swift; sourceTree = "<group>"; };
+		1C78311D2F26AD3A00AFD7F5 /* AppDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDateFormatter.swift; sourceTree = "<group>"; };
+		1C78311E2F26AD3A00AFD7F5 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
+		1C78311F2F26AD3A00AFD7F5 /* EmojiProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiProvider.swift; sourceTree = "<group>"; };
+		1C7831202F26AD3A00AFD7F5 /* GroceryEmojiMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryEmojiMap.swift; sourceTree = "<group>"; };
 		1CBC44652DC8CD40001A3418 /* SmartShopper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartShopper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CBC44722DC8CD42001A3418 /* SmartShopperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartShopperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CBC447C2DC8CD42001A3418 /* SmartShopperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartShopperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		1CBC44672DC8CD40001A3418 /* SmartShopper */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = SmartShopper;
-			sourceTree = "<group>";
-		};
 		1CBC44752DC8CD42001A3418 /* SmartShopperTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = SmartShopperTests;
@@ -72,10 +134,185 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1C7830F22F26AD3A00AFD7F5 /* MainModel */ = {
+			isa = PBXGroup;
+			children = (
+				1C7830F12F26AD3A00AFD7F5 /* GroceryItem.swift */,
+			);
+			path = MainModel;
+			sourceTree = "<group>";
+		};
+		1C7830F62F26AD3A00AFD7F5 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				1C7830F22F26AD3A00AFD7F5 /* MainModel */,
+				1C7830F32F26AD3A00AFD7F5 /* AppDelegate.swift */,
+				1C7830F42F26AD3A00AFD7F5 /* AppManager.swift */,
+				1C7830F52F26AD3A00AFD7F5 /* SmartShopperApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		1C7830F82F26AD3A00AFD7F5 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				1C7830F72F26AD3A00AFD7F5 /* CheckboxView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		1C7830FA2F26AD3A00AFD7F5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1C7830F92F26AD3A00AFD7F5 /* DateFormatter+ext.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1C7830FF2F26AD3A00AFD7F5 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				1C7830FB2F26AD3A00AFD7F5 /* MockGroceryRepository.swift */,
+				1C7830FC2F26AD3A00AFD7F5 /* Preview Assets.xcassets */,
+				1C7830FD2F26AD3A00AFD7F5 /* PreviewMockedData.swift */,
+				1C7830FE2F26AD3A00AFD7F5 /* PreviewModelContainer.swift */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		1C7831012F26AD3A00AFD7F5 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				1C7831002F26AD3A00AFD7F5 /* GroceryRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		1C7831042F26AD3A00AFD7F5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1C7831022F26AD3A00AFD7F5 /* Assets.xcassets */,
+				1C7831032F26AD3A00AFD7F5 /* GoogleService-Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		1C7831082F26AD3A00AFD7F5 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				1C7831072F26AD3A00AFD7F5 /* HomeView.swift */,
+				1C7831052F26AD3A00AFD7F5 /* GroceryItemRow.swift */,
+				1C7831062F26AD3A00AFD7F5 /* GroceryListViewModel.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		1C78310A2F26AD3A00AFD7F5 /* ManageItems */ = {
+			isa = PBXGroup;
+			children = (
+				1C7831092F26AD3A00AFD7F5 /* ManageItemsView.swift */,
+			);
+			path = ManageItems;
+			sourceTree = "<group>";
+		};
+		1C78310C2F26AD3A00AFD7F5 /* ReorderItems */ = {
+			isa = PBXGroup;
+			children = (
+				1C78310B2F26AD3A00AFD7F5 /* ReorderItemsView.swift */,
+			);
+			path = ReorderItems;
+			sourceTree = "<group>";
+		};
+		1C78310E2F26AD3A00AFD7F5 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				1C78310D2F26AD3A00AFD7F5 /* TabsView.swift */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
+		1C78310F2F26AD3A00AFD7F5 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				1C7831082F26AD3A00AFD7F5 /* Home */,
+				1C78310A2F26AD3A00AFD7F5 /* ManageItems */,
+				1C78310C2F26AD3A00AFD7F5 /* ReorderItems */,
+				1C78310E2F26AD3A00AFD7F5 /* Tabs */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		1C7831132F26AD3A00AFD7F5 /* LocalStorage */ = {
+			isa = PBXGroup;
+			children = (
+				1C7831102F26AD3A00AFD7F5 /* KeyValueStorageKey.swift */,
+				1C7831112F26AD3A00AFD7F5 /* LocalStorageAdapter.swift */,
+				1C7831122F26AD3A00AFD7F5 /* UserDefaultsStorageAdapter.swift */,
+			);
+			path = LocalStorage;
+			sourceTree = "<group>";
+		};
+		1C7831162F26AD3A00AFD7F5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1C7831142F26AD3A00AFD7F5 /* SwiftDataGroceryItem.swift */,
+				1C7831152F26AD3A00AFD7F5 /* SwiftDataGroceryStore.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1C7831192F26AD3A00AFD7F5 /* SwiftData */ = {
+			isa = PBXGroup;
+			children = (
+				1C7831162F26AD3A00AFD7F5 /* Model */,
+				1C7831172F26AD3A00AFD7F5 /* ModelContainerProvider.swift */,
+				1C7831182F26AD3A00AFD7F5 /* SwiftDataGroceryDataSource.swift */,
+			);
+			path = SwiftData;
+			sourceTree = "<group>";
+		};
+		1C78311C2F26AD3A00AFD7F5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1C7831132F26AD3A00AFD7F5 /* LocalStorage */,
+				1C7831192F26AD3A00AFD7F5 /* SwiftData */,
+				1C78311A2F26AD3A00AFD7F5 /* FirebaseService.swift */,
+				1C78311B2F26AD3A00AFD7F5 /* GroceryDataSourceProtocol.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		1C7831212F26AD3A00AFD7F5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1C78311D2F26AD3A00AFD7F5 /* AppDateFormatter.swift */,
+				1C78311E2F26AD3A00AFD7F5 /* AppLogger.swift */,
+				1C78311F2F26AD3A00AFD7F5 /* EmojiProvider.swift */,
+				1C7831202F26AD3A00AFD7F5 /* GroceryEmojiMap.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		1C7831222F26AD3A00AFD7F5 /* SmartShopper */ = {
+			isa = PBXGroup;
+			children = (
+				1C7830F62F26AD3A00AFD7F5 /* App */,
+				1C7830F82F26AD3A00AFD7F5 /* Components */,
+				1C7830FA2F26AD3A00AFD7F5 /* Extensions */,
+				1C7830FF2F26AD3A00AFD7F5 /* Preview Content */,
+				1C7831012F26AD3A00AFD7F5 /* Repositories */,
+				1C7831042F26AD3A00AFD7F5 /* Resources */,
+				1C78310F2F26AD3A00AFD7F5 /* Scenes */,
+				1C78311C2F26AD3A00AFD7F5 /* Services */,
+				1C7831212F26AD3A00AFD7F5 /* Utils */,
+			);
+			path = SmartShopper;
+			sourceTree = "<group>";
+		};
 		1CBC445C2DC8CD40001A3418 = {
 			isa = PBXGroup;
 			children = (
-				1CBC44672DC8CD40001A3418 /* SmartShopper */,
+				1C7831222F26AD3A00AFD7F5 /* SmartShopper */,
 				1CBC44752DC8CD42001A3418 /* SmartShopperTests */,
 				1CBC447F2DC8CD42001A3418 /* SmartShopperUITests */,
 				1CBC44662DC8CD40001A3418 /* Products */,
@@ -107,9 +344,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				1CBC44672DC8CD40001A3418 /* SmartShopper */,
 			);
 			name = SmartShopper;
 			packageProductDependencies = (
@@ -197,7 +431,6 @@
 			mainGroup = 1CBC445C2DC8CD40001A3418;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				1CBC44902DC8D630001A3418 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1CBC44662DC8CD40001A3418 /* Products */;
@@ -216,6 +449,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C7831402F26AD3A00AFD7F5 /* Preview Assets.xcassets in Resources */,
+				1C7831412F26AD3A00AFD7F5 /* Assets.xcassets in Resources */,
+				1C7831422F26AD3A00AFD7F5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +498,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C7831232F26AD3A00AFD7F5 /* GroceryItem.swift in Sources */,
+				1C7831242F26AD3A00AFD7F5 /* AppDelegate.swift in Sources */,
+				1C7831252F26AD3A00AFD7F5 /* AppManager.swift in Sources */,
+				1C7831262F26AD3A00AFD7F5 /* SmartShopperApp.swift in Sources */,
+				1C7831272F26AD3A00AFD7F5 /* CheckboxView.swift in Sources */,
+				1C7831282F26AD3A00AFD7F5 /* DateFormatter+ext.swift in Sources */,
+				1C7831292F26AD3A00AFD7F5 /* MockGroceryRepository.swift in Sources */,
+				1C78312A2F26AD3A00AFD7F5 /* PreviewMockedData.swift in Sources */,
+				1C78312B2F26AD3A00AFD7F5 /* PreviewModelContainer.swift in Sources */,
+				1C78312C2F26AD3A00AFD7F5 /* GroceryRepository.swift in Sources */,
+				1C78312D2F26AD3A00AFD7F5 /* GroceryItemRow.swift in Sources */,
+				1C78312E2F26AD3A00AFD7F5 /* GroceryListViewModel.swift in Sources */,
+				1C78312F2F26AD3A00AFD7F5 /* HomeView.swift in Sources */,
+				1C7831302F26AD3A00AFD7F5 /* ManageItemsView.swift in Sources */,
+				1C7831312F26AD3A00AFD7F5 /* ReorderItemsView.swift in Sources */,
+				1C7831322F26AD3A00AFD7F5 /* TabsView.swift in Sources */,
+				1C7831332F26AD3A00AFD7F5 /* KeyValueStorageKey.swift in Sources */,
+				1C7831342F26AD3A00AFD7F5 /* LocalStorageAdapter.swift in Sources */,
+				1C7831352F26AD3A00AFD7F5 /* UserDefaultsStorageAdapter.swift in Sources */,
+				1C7831362F26AD3A00AFD7F5 /* SwiftDataGroceryItem.swift in Sources */,
+				1C7831372F26AD3A00AFD7F5 /* SwiftDataGroceryStore.swift in Sources */,
+				1C7831382F26AD3A00AFD7F5 /* ModelContainerProvider.swift in Sources */,
+				1C7831392F26AD3A00AFD7F5 /* SwiftDataGroceryDataSource.swift in Sources */,
+				1C78313A2F26AD3A00AFD7F5 /* FirebaseService.swift in Sources */,
+				1C78313B2F26AD3A00AFD7F5 /* GroceryDataSourceProtocol.swift in Sources */,
+				1C78313C2F26AD3A00AFD7F5 /* AppDateFormatter.swift in Sources */,
+				1C78313D2F26AD3A00AFD7F5 /* AppLogger.swift in Sources */,
+				1C78313E2F26AD3A00AFD7F5 /* EmojiProvider.swift in Sources */,
+				1C78313F2F26AD3A00AFD7F5 /* GroceryEmojiMap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,17 +859,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		1CBC44902DC8D630001A3418 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint";
-			requirement = {
-				kind = exactVersion;
-				version = 0.59.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 1CBC445D2DC8CD40001A3418 /* Project object */;
 }
