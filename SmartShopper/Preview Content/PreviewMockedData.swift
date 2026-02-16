@@ -20,6 +20,10 @@ final class PreviewMockedDataSource: GroceryDataSourceProtocol {
         store
     }
 
+    func addItem(_ item: GroceryItem) async throws {
+        store.append(item)
+    }
+
     func updateItem(_ item: GroceryItem) async throws {
         guard let index = store.firstIndex(where: { $0.id == item.id }) else { return }
         store[index] = item

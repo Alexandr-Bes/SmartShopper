@@ -17,7 +17,7 @@ protocol GroceryListViewModelProtocol: Observable {
 
     func loadItems() async
     func toggleItem(_ item: GroceryItem)
-    func addItem(_ item: GroceryItem)
+    func addItem(with name: String)
     func sortItems()
     func filterByStore()
 }
@@ -101,8 +101,14 @@ final class GroceryListViewModel: GroceryListViewModelProtocol {
         }
     }
 
-    func addItem(_ item: GroceryItem) {
-        items.append(item)
+    func addItem(with name: String) {
+        let newItem = GroceryItem(
+            name: name,
+            category: .unCategorized,
+            stores: [mockStores.first!], // TODO: - Store
+            isBought: false
+        )
+        items.append(newItem)
     }
 
     func filterByStore() {

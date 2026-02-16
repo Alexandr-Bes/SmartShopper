@@ -28,6 +28,10 @@ final class SwiftDataGroceryDataSource: GroceryDataSourceProtocol {
         return result.map { $0.toDomainModel() }
     }
 
+    func addItem(_ item: GroceryItem) async throws {
+        Log.debug("Add item: \(item)")
+    }
+
     func updateItem(_ item: GroceryItem) async throws {
         let itemId = item.id
         let descriptor = FetchDescriptor<SwiftDataGroceryItem>(

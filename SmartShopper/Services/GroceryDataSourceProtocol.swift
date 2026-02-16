@@ -9,6 +9,7 @@ import Foundation
 
 protocol GroceryDataSourceProtocol: Sendable {
     func fetchItems() async throws -> [GroceryItem]
+    func addItem(_ item: GroceryItem) async throws
     func updateItem(_ item: GroceryItem) async throws
     func deleteItems(ids: [String]) async throws
     func setDefaultItemsIfNeeded(_ items: [GroceryItem]) async throws

@@ -13,6 +13,10 @@ final class MockGroceryRepository: GroceryRepositoryProtocol {
         return GroceryStore(name: "Pingo")
     }
 
+    func add(_ item: GroceryItem) {
+        Log.debug("Add Item: \(item)")
+    }
+
     func getItems() async throws -> [GroceryItem] {
         mockItems
     }

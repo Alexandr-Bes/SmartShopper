@@ -9,37 +9,49 @@ import SwiftUI
 
 struct ManageItemsView<ViewModel: GroceryListViewModelProtocol>: View {
     @State var viewModel: ViewModel
-
-    @State private var newItemName = ""
+    @State private var itemName = ""
 
     var body: some View {
-        VStack {
-
-            List {
-                ForEach(viewModel.items) { item in
-                    Text("\(item.emoji ?? "") \(item.name)")
-                }
-                .onDelete { indexSet in
-                    viewModel.items.remove(atOffsets: indexSet)
-                }
+        List {
+            ForEach(viewModel.items) { item in
+                Text("\(item.emoji ?? "") \(item.name)")
             }
-
-            TextField("New Item", text: $newItemName)
-                .textFieldStyle(.roundedBorder)
-                .padding()
-
-            Button("Add") {
-                let newItem = GroceryItem(
-                    name: newItemName,
-                    category: .unCategorized,
-                    stores: [mockStores.first!], // TODO: - Store
-                    isBought: false
-                )
-                viewModel.addItem(newItem)
-                viewModel.sortItems()
-                newItemName = ""
+            .onDelete { indexSet in
+                viewModel.items.remove(atOffsets: indexSet)
             }
         }
+        .safeAreaInset(edge: .bottom) {
+            VStack(spacing: 12) {
+                TextField("New Item", text: $itemName)
+                    .textFieldStyle(.roundedBorder)
+
+                Button {
+                    viewModel.addItem(with: itemName)
+                    viewModel.sortItems()
+                    itemName = ""
+                } label: {
+                    Label {
+                        Text("Add")
+                    } icon: {
+                        Image(systemName: "plus")
+                    }
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
+                    .background {
+                        RoundedRectangle(cornerRadius: 14)
+                            .fill(.blue)
+                    }
+                    .glassEffect(.clear)
+                }
+                .disabled(itemName.isEmpty)
+                .buttonStyle(.plain)
+
+            }
+            .padding()
+        }
+        .padding(.bottom, 16)
+        .background(.ultraThinMaterial)
     }
 }
 

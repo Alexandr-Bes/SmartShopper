@@ -9,6 +9,7 @@ import Foundation
 
 protocol GroceryRepositoryProtocol {
     func getSelectedStore() -> GroceryStore
+    func add(_ item: GroceryItem)
     func getItems() async throws -> [GroceryItem]
     func updateItem(_ item: GroceryItem) async throws
     func deleteItems(_ ids: [String]) async throws
@@ -29,6 +30,10 @@ final class GroceryRepository: GroceryRepositoryProtocol {
 
     func getItems() async throws -> [GroceryItem] {
         try await dataSource.fetchItems()
+    }
+
+    func add(_ item: GroceryItem) {
+        
     }
 
     func updateItem(_ item: GroceryItem) async throws {
@@ -72,8 +77,8 @@ let mockStores: [GroceryStore] = [GroceryStore(name: "Pingo Doce", selected: tru
 let mockItems = [
     GroceryItem(name: "Milk", category: .drinks, stores: [mockStores.first!]),
     GroceryItem(name: "Bread", category: .unCategorized, stores: mockStores),
-    GroceryItem(name: "Apples", category: .fruits, stores: mockStores),
-    GroceryItem(name: "Oranges", category: .fruits, stores: mockStores),
+    GroceryItem(name: "Apple", category: .fruits, stores: mockStores),
+    GroceryItem(name: "Orange", category: .fruits, stores: mockStores),
     GroceryItem(name: "Chicken", category: .meat, stores: mockStores),
     GroceryItem(name: "Eggs", category: .meat, stores: mockStores),
     GroceryItem(name: "Salmon", category: .fish, stores: [mockStores[1]])

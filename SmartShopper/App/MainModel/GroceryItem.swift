@@ -12,21 +12,32 @@ struct GroceryItem: Identifiable, Sendable, Equatable {
     let name: String
     let category: GroceryItemCategory
     let stores: [GroceryStore]
-    var isBought: Bool = false
+    var isBought: Bool
     var sortIndex: Int?
+    var isDeleted: Bool
+    let createdAt: Date
+    var updatedAt: Date
 
-    init(id: String = UUID().uuidString,
-         name: String,
-         category: GroceryItemCategory,
-         stores: [GroceryStore],
-         isBought: Bool = false,
-         sortIndex: Int? = nil) {
+    init(
+        id: String = UUID().uuidString,
+        name: String,
+        category: GroceryItemCategory,
+        stores: [GroceryStore],
+        isBought: Bool = false,
+        sortIndex: Int? = nil,
+        createdAt: Date = Date.now,
+        updatedAt: Date = Date.now,
+        isDeleted: Bool = false
+    ) {
         self.id = id
         self.name = name
         self.category = category
         self.stores = stores
         self.isBought = isBought
         self.sortIndex = sortIndex
+        self.isDeleted = isDeleted
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
     }
 
     var emoji: String? {
