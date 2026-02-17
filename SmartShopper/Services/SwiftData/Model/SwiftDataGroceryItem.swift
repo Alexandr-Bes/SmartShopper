@@ -26,6 +26,8 @@ final class SwiftDataGroceryItem {
         self.category = item.category.rawValue //TODO: - Check if this works properly (same string lowercased, etc.)
         self.isBought = item.isBought
         self.sortIndex = item.sortIndex
+        self.createdAt = item.createdAt
+        self.updatedAt = item.updatedAt
         #warning("Grocery stores doesn't get stored")
         self.stores = [] //item.stores //TODO: - Add mapper
     }

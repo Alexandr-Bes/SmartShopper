@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C34E08D2F43BAC200F33396 /* ManageItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C34E08C2F43BAC200F33396 /* ManageItemRow.swift */; };
+		1C34E08F2F43BD0E00F33396 /* ManageItemDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C34E08E2F43BD0E00F33396 /* ManageItemDetailsView.swift */; };
+		1C34E0912F43BD8400F33396 /* EmptyItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C34E0902F43BD8400F33396 /* EmptyItemsView.swift */; };
+		1C34E0932F43BEFB00F33396 /* ItemEditorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C34E0922F43BEFB00F33396 /* ItemEditorSheet.swift */; };
 		1C7831232F26AD3A00AFD7F5 /* GroceryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7830F12F26AD3A00AFD7F5 /* GroceryItem.swift */; };
 		1C7831242F26AD3A00AFD7F5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7830F32F26AD3A00AFD7F5 /* AppDelegate.swift */; };
 		1C7831252F26AD3A00AFD7F5 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C7830F42F26AD3A00AFD7F5 /* AppManager.swift */; };
@@ -59,6 +63,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C34E08C2F43BAC200F33396 /* ManageItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageItemRow.swift; sourceTree = "<group>"; };
+		1C34E08E2F43BD0E00F33396 /* ManageItemDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageItemDetailsView.swift; sourceTree = "<group>"; };
+		1C34E0902F43BD8400F33396 /* EmptyItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyItemsView.swift; sourceTree = "<group>"; };
+		1C34E0922F43BEFB00F33396 /* ItemEditorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEditorSheet.swift; sourceTree = "<group>"; };
 		1C7830F12F26AD3A00AFD7F5 /* GroceryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryItem.swift; sourceTree = "<group>"; };
 		1C7830F32F26AD3A00AFD7F5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1C7830F42F26AD3A00AFD7F5 /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
@@ -134,6 +142,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1C34E0942F43D9CE00F33396 /* DetailsView */ = {
+			isa = PBXGroup;
+			children = (
+				1C34E08E2F43BD0E00F33396 /* ManageItemDetailsView.swift */,
+			);
+			path = DetailsView;
+			sourceTree = "<group>";
+		};
+		1C758CD42F44FDF500482AB0 /* AddEditItem */ = {
+			isa = PBXGroup;
+			children = (
+				1C34E0922F43BEFB00F33396 /* ItemEditorSheet.swift */,
+			);
+			path = AddEditItem;
+			sourceTree = "<group>";
+		};
 		1C7830F22F26AD3A00AFD7F5 /* MainModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,6 +235,10 @@
 			isa = PBXGroup;
 			children = (
 				1C7831092F26AD3A00AFD7F5 /* ManageItemsView.swift */,
+				1C34E08C2F43BAC200F33396 /* ManageItemRow.swift */,
+				1C34E0942F43D9CE00F33396 /* DetailsView */,
+				1C758CD42F44FDF500482AB0 /* AddEditItem */,
+				1C34E0902F43BD8400F33396 /* EmptyItemsView.swift */,
 			);
 			path = ManageItems;
 			sourceTree = "<group>";
@@ -488,7 +516,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -510,6 +538,7 @@
 				1C78312C2F26AD3A00AFD7F5 /* GroceryRepository.swift in Sources */,
 				1C78312D2F26AD3A00AFD7F5 /* GroceryItemRow.swift in Sources */,
 				1C78312E2F26AD3A00AFD7F5 /* GroceryListViewModel.swift in Sources */,
+				1C34E08F2F43BD0E00F33396 /* ManageItemDetailsView.swift in Sources */,
 				1C78312F2F26AD3A00AFD7F5 /* HomeView.swift in Sources */,
 				1C7831302F26AD3A00AFD7F5 /* ManageItemsView.swift in Sources */,
 				1C7831312F26AD3A00AFD7F5 /* ReorderItemsView.swift in Sources */,
@@ -524,6 +553,9 @@
 				1C78313A2F26AD3A00AFD7F5 /* FirebaseService.swift in Sources */,
 				1C78313B2F26AD3A00AFD7F5 /* GroceryDataSourceProtocol.swift in Sources */,
 				1C78313C2F26AD3A00AFD7F5 /* AppDateFormatter.swift in Sources */,
+				1C34E0912F43BD8400F33396 /* EmptyItemsView.swift in Sources */,
+				1C34E08D2F43BAC200F33396 /* ManageItemRow.swift in Sources */,
+				1C34E0932F43BEFB00F33396 /* ItemEditorSheet.swift in Sources */,
 				1C78313D2F26AD3A00AFD7F5 /* AppLogger.swift in Sources */,
 				1C78313E2F26AD3A00AFD7F5 /* EmojiProvider.swift in Sources */,
 				1C78313F2F26AD3A00AFD7F5 /* GroceryEmojiMap.swift in Sources */,

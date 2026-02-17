@@ -29,7 +29,9 @@ final class SwiftDataGroceryDataSource: GroceryDataSourceProtocol {
     }
 
     func addItem(_ item: GroceryItem) async throws {
-        Log.debug("Add item: \(item)")
+        let entity = SwiftDataGroceryItem(from: item)
+        context.insert(entity)
+        try context.save()
     }
 
     func updateItem(_ item: GroceryItem) async throws {
@@ -42,12 +44,11 @@ final class SwiftDataGroceryDataSource: GroceryDataSourceProtocol {
             return
         }
 
-        //TODO: updating other values as well
+        model.name = item.name
         model.isBought = item.isBought
-//        storedItem.category = item.category
-//        storedItem.sortIndex = item.sortIndex
-//        storedItem.stores = item.stores
-//        storedItem.updatedAt = Date()
+        model.category = item.category.rawValue
+        model.sortIndex = item.sortIndex
+        model.updatedAt = item.updatedAt
 
         try context.save()
     }

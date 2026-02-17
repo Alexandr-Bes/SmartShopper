@@ -38,19 +38,22 @@ struct TabsView: View {
             }
 
             Tab("Order", systemImage: "arrow.up.arrow.down") {
-                ReorderItemsView(viewModel: groceryListViewModel)
-                    .tag(TabTarget.order)
+                NavigationStack {
+                    ReorderItemsView(viewModel: groceryListViewModel)
+                        .tag(TabTarget.order)
+                }
             }
 
             Tab("Manage", systemImage: "plus.circle") {
-                ManageItemsView(viewModel: groceryListViewModel)
-                    .tag(TabTarget.manage)
+                NavigationStack {
+                    ManageItemsView(viewModel: groceryListViewModel)
+                        .tag(TabTarget.manage)
+                }
             }
 
             Tab(role: .search) {
                 Image(systemName: "globe")
             }
-
         }
         .searchable(text: $searchQuery)
         .tabBarMinimizeBehavior(.automatic)

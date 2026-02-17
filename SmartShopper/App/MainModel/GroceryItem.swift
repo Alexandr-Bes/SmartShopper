@@ -17,6 +17,7 @@ struct GroceryItem: Identifiable, Sendable, Equatable {
     var isDeleted: Bool
     let createdAt: Date
     var updatedAt: Date
+    var lastTimeBought: Date?
 
     init(
         id: String = UUID().uuidString,
@@ -25,9 +26,10 @@ struct GroceryItem: Identifiable, Sendable, Equatable {
         stores: [GroceryStore],
         isBought: Bool = false,
         sortIndex: Int? = nil,
+        isDeleted: Bool = false,
         createdAt: Date = Date.now,
         updatedAt: Date = Date.now,
-        isDeleted: Bool = false
+        lastTimeBought: Date? = nil
     ) {
         self.id = id
         self.name = name
@@ -38,6 +40,7 @@ struct GroceryItem: Identifiable, Sendable, Equatable {
         self.isDeleted = isDeleted
         self.createdAt = createdAt
         self.updatedAt = updatedAt
+        self.lastTimeBought = lastTimeBought
     }
 
     var emoji: String? {

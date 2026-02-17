@@ -15,9 +15,18 @@ protocol GroceryListViewModelProtocol: Observable {
     var stores: [GroceryStore] { get set }
     var sortOption: GroceryItemsSortType { get set }
 
-    func loadItems() async
+    func loadItems()
     func toggleItem(_ item: GroceryItem)
-    func addItem(with name: String)
+    func addItem(name: String, category: GroceryItemCategory, stores: [GroceryStore]) async -> Bool
+    func updateItem(
+        id: String,
+        name: String,
+        category: GroceryItemCategory,
+        stores: [GroceryStore],
+        isBought: Bool
+    ) async -> Bool
+    func deleteItems(ids: [String]) async
+    func item(withID id: String) -> GroceryItem?
     func sortItems()
     func filterByStore()
 }
@@ -101,14 +110,84 @@ final class GroceryListViewModel: GroceryListViewModelProtocol {
         }
     }
 
-    func addItem(with name: String) {
+    func addItem(name: String, category: GroceryItemCategory, stores: [GroceryStore]) async -> Bool {
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedName.isEmpty else { return false }
+
+        let resolvedStores = stores.isEmpty ? [selectedStore] : stores.sorted()
         let newItem = GroceryItem(
-            name: name,
-            category: .unCategorized,
-            stores: [mockStores.first!], // TODO: - Store
+            name: trimmedName,
+            category: category,
+            stores: resolvedStores,
             isBought: false
         )
+
         items.append(newItem)
+        sortItems()
+
+        do {
+            try await repository.add(newItem)
+            return true
+        } catch {
+            items.removeAll { $0.id == newItem.id }
+            Log.error("Failed to add item: \(error)")
+            return false
+        }
+    }
+
+    func updateItem(
+        id: String,
+        name: String,
+        category: GroceryItemCategory,
+        stores: [GroceryStore],
+        isBought: Bool
+    ) async -> Bool {
+        guard let index = items.firstIndex(where: { $0.id == id }) else { return false }
+
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedName.isEmpty else { return false }
+
+        let previous = items[index]
+        let resolvedStores = stores.isEmpty ? [selectedStore] : stores.sorted()
+        let updated = GroceryItem(
+            id: previous.id,
+            name: trimmedName,
+            category: category,
+            stores: resolvedStores,
+            isBought: isBought,
+            sortIndex: previous.sortIndex,
+            isDeleted: previous.isDeleted,
+            createdAt: previous.createdAt,
+            updatedAt: .now
+        )
+
+        items[index] = updated
+        sortItems()
+
+        do {
+            try await repository.updateItem(updated)
+            return true
+        } catch {
+            items[index] = previous
+            Log.error("Failed to edit item: \(error)")
+            return false
+        }
+    }
+
+    func deleteItems(ids: [String]) async {
+        let previous = items
+        items.removeAll { ids.contains($0.id) }
+
+        do {
+            try await repository.deleteItems(ids)
+        } catch {
+            items = previous
+            Log.error("Failed to delete items: \(error)")
+        }
+    }
+
+    func item(withID id: String) -> GroceryItem? {
+        items.first(where: { $0.id == id })
     }
 
     func filterByStore() {
