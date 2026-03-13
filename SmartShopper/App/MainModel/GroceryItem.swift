@@ -7,12 +7,15 @@
 
 import Foundation
 
+// MARK: - Item
+
 struct GroceryItem: Identifiable, Sendable, Equatable {
     let id: String
     let name: String
     let category: GroceryItemCategory
     let stores: [GroceryStore]
     var isBought: Bool
+    var expirationDate: Date?
     var sortIndex: Int?
     var isDeleted: Bool
     let createdAt: Date
@@ -25,6 +28,7 @@ struct GroceryItem: Identifiable, Sendable, Equatable {
         category: GroceryItemCategory,
         stores: [GroceryStore],
         isBought: Bool = false,
+        expirationDate: Date? = nil,
         sortIndex: Int? = nil,
         isDeleted: Bool = false,
         createdAt: Date = Date.now,
@@ -36,6 +40,7 @@ struct GroceryItem: Identifiable, Sendable, Equatable {
         self.category = category
         self.stores = stores
         self.isBought = isBought
+        self.expirationDate = expirationDate
         self.sortIndex = sortIndex
         self.isDeleted = isDeleted
         self.createdAt = createdAt
@@ -52,6 +57,7 @@ struct GroceryItem: Identifiable, Sendable, Equatable {
     }
 }
 
+// MARK: - Store
 struct GroceryStore: Identifiable, Equatable, Comparable, Hashable {
     let id: String
     let name: String
@@ -79,6 +85,7 @@ struct GroceryStore: Identifiable, Equatable, Comparable, Hashable {
     }
 }
 
+//MARK: - Category
 enum GroceryItemCategory: String, CaseIterable, Comparable {
     case fruits
     case vegetables
@@ -116,6 +123,7 @@ enum GroceryItemCategory: String, CaseIterable, Comparable {
     }
 }
 
+// MARK: - Sort Type
 enum GroceryItemsSortType: CaseIterable {
     case name
     case category
@@ -126,4 +134,12 @@ enum GroceryItemsSortType: CaseIterable {
         case .category: return "Category"
         }
     }
+}
+
+//MARK: - Item Section
+struct GroceryItemSection: Identifiable, Equatable {
+    let category: GroceryItemCategory
+    let items: [GroceryItem]
+
+    var id: GroceryItemCategory { category }
 }

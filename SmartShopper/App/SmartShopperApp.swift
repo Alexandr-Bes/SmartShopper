@@ -28,6 +28,8 @@ struct ContentView: View {
             if let manager = appManager {
                 TabsView(appManager: manager)
                     .environment(manager)
+                    .appTheme(.default)
+                    .tint(AppTheme.default.accentTint)
                     .onOpenURL(perform: handleDeepLink)
                     .onAppear {
                         Task {
@@ -49,9 +51,19 @@ struct ContentView: View {
     }
 
     private func handleDeepLink(_ url: URL) {
-        guard let host = url.host else { return }
-        if let target = TabTarget(rawValue: host) {
-            appManager?.deepLinkTarget = target
+        if let route = DeepLinkRoute.parse(url: url) {
+            appManager?.deepLinkRoute = route
+
+            switch route {
+            case let .tab(tab):
+                appManager?.deepLinkTarget = tab
+            case .homeItemDetails:
+                appManager?.deepLinkTarget = .list
+            case .manageItemDetails:
+                appManager?.deepLinkTarget = .manage
+            case .search:
+                appManager?.deepLinkTarget = .search
+            }
         }
     }
 }
@@ -62,7 +74,7 @@ struct SplashView: View {
             Color.white.ignoresSafeArea()
             VStack {
                 ProgressView()
-                Text("Loading groceries...")
+                Text("Loading your groceries...")
             }
         }
     }

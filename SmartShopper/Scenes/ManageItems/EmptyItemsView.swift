@@ -16,9 +16,9 @@ struct EmptyItemsView: View {
             Image(systemName: "basket")
                 .font(.system(size: 28, weight: .semibold))
                 .foregroundStyle(.secondary)
-            Text("No items yet")
+            Text(Localization.text(.emptyItemsTitle))
                 .font(.headline)
-            Text("Add your first grocery item and start organizing your list.")
+            Text(Localization.text(.emptyItemsSubtitle))
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
@@ -26,7 +26,7 @@ struct EmptyItemsView: View {
             Button {
                 onAddItem?()
             } label: {
-                Label("Add New Item", systemImage: "plus.circle.fill")
+                Label(Localization.text(.addNewItem), systemImage: "plus.circle.fill")
                     .fontWeight(.semibold)
                     .buttonStyle(.glass)
             }

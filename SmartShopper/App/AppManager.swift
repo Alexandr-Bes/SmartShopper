@@ -16,15 +16,22 @@ final class AppManager {
 
     let dataSource: GroceryDataSourceProtocol
     let groceryRepository: GroceryRepositoryProtocol
+    let premiumAccess: PremiumAccessProviding
+    let locationService: LocationServiceProtocol
 
     var currentStore: GroceryStore { actualStore }
     var deepLinkTarget: TabTarget?
+    var deepLinkRoute: DeepLinkRoute?
 
     init(context: ModelContext,
-         dataSource: GroceryDataSourceProtocol) {
+         dataSource: GroceryDataSourceProtocol,
+         premiumAccess: PremiumAccessProviding = BasicPremiumAccess(),
+         locationService: LocationServiceProtocol = LocationService()) {
         self.context = context
         self.dataSource = dataSource
         self.groceryRepository = GroceryRepository(dataSource: dataSource)
+        self.premiumAccess = premiumAccess
+        self.locationService = locationService
     }
 
     func appLaunched() async {

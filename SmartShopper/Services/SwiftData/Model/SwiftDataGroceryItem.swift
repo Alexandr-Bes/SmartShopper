@@ -14,6 +14,7 @@ final class SwiftDataGroceryItem {
     var name: String
     var category: String
     var isBought: Bool
+    var expirationDate: Date?
     var sortIndex: Int?
     var createdAt: Date?
     var updatedAt: Date?
@@ -25,6 +26,7 @@ final class SwiftDataGroceryItem {
         self.name = item.name
         self.category = item.category.rawValue //TODO: - Check if this works properly (same string lowercased, etc.)
         self.isBought = item.isBought
+        self.expirationDate = item.expirationDate
         self.sortIndex = item.sortIndex
         self.createdAt = item.createdAt
         self.updatedAt = item.updatedAt
@@ -36,6 +38,7 @@ final class SwiftDataGroceryItem {
          name: String,
          category: String,
          isBought: Bool = false,
+         expirationDate: Date? = nil,
          sortIndex: Int? = nil,
          createdAt: Date = Date(),
          updatedAt: Date? = nil,
@@ -44,6 +47,7 @@ final class SwiftDataGroceryItem {
         self.name = name
         self.category = category
         self.isBought = isBought
+        self.expirationDate = expirationDate
         self.sortIndex = sortIndex
         self.stores = stores
     }
@@ -54,6 +58,9 @@ final class SwiftDataGroceryItem {
                     category: GroceryItemCategory(rawValue: category) ?? .unCategorized,
                     stores: stores.map { GroceryStore(id: $0.id, name: $0.name) },
                     isBought: isBought,
-                    sortIndex: sortIndex)
+                    expirationDate: expirationDate,
+                    sortIndex: sortIndex,
+                    createdAt: createdAt ?? .now,
+                    updatedAt: updatedAt ?? .now)
     }
 }

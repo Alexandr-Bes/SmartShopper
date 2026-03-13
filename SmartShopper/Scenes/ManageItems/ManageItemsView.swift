@@ -7,27 +7,23 @@
 
 import SwiftUI
 
-struct ManageItemsView<ViewModel: GroceryListViewModelProtocol>: View {
-    @State var viewModel: ViewModel
-    @State private var isShowingAddSheet = false
+struct ManageItemsView: View {
+    @Environment(\.appTheme) private var theme
 
-    private var groupedItems: [(category: GroceryItemCategory, items: [GroceryItem])] {
-        let grouped = Dictionary(grouping: viewModel.items) { $0.category }
-        return grouped
-            .map { category, items in
-                (category: category, items: items.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending })
-            }
-            .sorted { $0.category < $1.category }
-    }
+    @State var viewModel: ManageItemsViewModel
+    @State private var isShowingAddSheet = false
+    @State private var showAddedFeedback = false
+    @State private var showPremiumInfo = false
 
     var body: some View {
         List {
             if viewModel.items.isEmpty {
                 EmptyItemsView {
                     isShowingAddSheet = true
-                }.listRowBackground(Color.clear)
+                }
+                .listRowBackground(Color.clear)
             } else {
-                ForEach(groupedItems, id: \.category) { group in
+                ForEach(viewModel.sections) { group in
                     Section(group.category.title) {
                         ForEach(group.items) { item in
                             NavigationLink(value: item.id) {
@@ -39,60 +35,88 @@ struct ManageItemsView<ViewModel: GroceryListViewModelProtocol>: View {
                                         await viewModel.deleteItems(ids: [item.id])
                                     }
                                 } label: {
-                                    Label("Delete", systemImage: "trash")
+                                    Label(Localization.text(.delete), systemImage: "trash")
                                 }
+                                .tint(theme.destructive)
                             }
                         }
                     }
                 }
             }
         }
-        .navigationTitle("Manage Items")
+        .navigationTitle(Localization.text(.manageTitle))
         .navigationDestination(for: String.self) { itemID in
             ManageItemDetailsView(viewModel: viewModel, itemID: itemID)
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
+                    viewModel.loadSuggestedStore()
                     isShowingAddSheet = true
                 } label: {
-                    Label("Add Item", systemImage: "plus")
+                    Label(Localization.text(.addItem), systemImage: "plus")
                 }
             }
         }
+        .overlay(alignment: .bottom) {
+            if showAddedFeedback {
+                Label(Localization.text(.successAdded), systemImage: "checkmark.circle.fill")
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                    .background(.ultraThinMaterial)
+                    .clipShape(Capsule())
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .padding(.bottom, 24)
+            }
+        }
+        .animation(.snappy, value: viewModel.sections)
+        .animation(.spring(response: 0.4, dampingFraction: 0.8), value: showAddedFeedback)
         .sheet(isPresented: $isShowingAddSheet) {
             ItemEditorSheet(
                 mode: .add,
-                stores: viewModel.stores.sorted(),
-                selectedStore: viewModel.selectedStore
+                stores: viewModel.stores,
+                selectedStore: viewModel.suggestedStoreForNewItem ?? viewModel.selectedStore,
+                canUseExpiration: viewModel.canUseExpiration,
+                onPremiumActionTap: { showPremiumInfo = true },
+                initialExpirationDays: nil
             ) { draft in
-                await viewModel.addItem(name: draft.name, category: draft.category, stores: draft.stores)
+                let didSave = await viewModel.addItem(
+                    name: draft.name,
+                    category: draft.category,
+                    stores: draft.stores,
+                    expirationDays: draft.expirationDays
+                )
+
+                if didSave {
+                    showAddedFeedback = true
+                    Task {
+                        try? await Task.sleep(for: .seconds(1.3))
+                        await MainActor.run {
+                            showAddedFeedback = false
+                        }
+                    }
+                }
+                return didSave
             }
         }
-    }
-}
-
-
-//FIXME: - Remove
-extension GroceryItemCategory {
-    var title: String {
-        switch self {
-        case .fruits: return "Fruits"
-        case .vegetables: return "Vegetables"
-        case .meat: return "Meat"
-        case .fish: return "Fish"
-        case .spices: return "Spices"
-        case .cerealAndPasta: return "Cereal & Pasta"
-        case .seasoning: return "Seasoning"
-        case .sweat: return "Sweets"
-        case .drinks: return "Drinks"
-        case .unCategorized: return "Uncategorized"
+        .alert(Localization.text(.premiumLocked), isPresented: $showPremiumInfo) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(Localization.text(.premiumFeature))
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        ManageItemsView(viewModel: GroceryListViewModel(items: mockItems))
+        let premiumAccess = BasicPremiumAccess(enabledFeatures: [.expirationTracking,
+                                                                 .nearbyStorePreselection])
+        ManageItemsView(viewModel:
+            ManageItemsViewModel(
+                shared: SharedViewModel(items: mockItems),
+                premiumAccess: premiumAccess,
+                locationService: LocationService()
+            )
+        )
     }
 }

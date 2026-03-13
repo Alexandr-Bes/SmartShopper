@@ -13,6 +13,9 @@ struct ItemEditorSheet: View {
     let mode: Mode
     let stores: [GroceryStore]
     let selectedStore: GroceryStore
+    let canUseExpiration: Bool
+    let onPremiumActionTap: () -> Void
+    let initialExpirationDays: Int?
     let onSave: (ItemEditorDraft) async -> Bool
 
     @State private var name: String
@@ -21,16 +24,24 @@ struct ItemEditorSheet: View {
     @State private var selectedStoreIDs: Set<String>
     @State private var isSaving = false
     @State private var showError = false
+    @State private var isExpirationEnabled: Bool
+    @State private var expirationDays: Int
 
     init(
         mode: Mode,
         stores: [GroceryStore],
         selectedStore: GroceryStore,
+        canUseExpiration: Bool,
+        onPremiumActionTap: @escaping () -> Void,
+        initialExpirationDays: Int?,
         onSave: @escaping (ItemEditorDraft) async -> Bool
     ) {
         self.mode = mode
         self.stores = stores
         self.selectedStore = selectedStore
+        self.canUseExpiration = canUseExpiration
+        self.onPremiumActionTap = onPremiumActionTap
+        self.initialExpirationDays = initialExpirationDays
         self.onSave = onSave
 
         switch mode {
@@ -46,6 +57,9 @@ struct ItemEditorSheet: View {
             _isBought = State(initialValue: item.isBought)
             _selectedStoreIDs = State(initialValue: Set(item.stores.map(\.id)))
         }
+
+        _isExpirationEnabled = State(initialValue: initialExpirationDays != nil)
+        _expirationDays = State(initialValue: max(1, initialExpirationDays ?? 7))
     }
 
     private var canSave: Bool {
@@ -55,17 +69,17 @@ struct ItemEditorSheet: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Basic") {
-                    TextField("Item name", text: $name)
+                Section(Localization.text(.itemDetails)) {
+                    TextField(Localization.text(.itemName), text: $name)
                         .textInputAutocapitalization(.words)
-                    Picker("Category", selection: $category) {
+                    Picker(Localization.text(.category), selection: $category) {
                         ForEach(GroceryItemCategory.allCases, id: \.self) { category in
                             Text(category.title).tag(category)
                         }
                     }
                 }
 
-                Section("Stores") {
+                Section(Localization.text(.stores)) {
                     ForEach(stores) { store in
                         Button {
                             toggleStore(store.id)
@@ -86,14 +100,29 @@ struct ItemEditorSheet: View {
                 }
 
                 if mode.item != nil {
-                    Section("Status") {
-                        Toggle("Bought", isOn: $isBought)
-                        if let lastTimeBought = mode.item?.lastTimeBought {
-                            detailsRow(
-                                title: "Last time bought",
-                                value: lastTimeBought.formatted(date: .abbreviated, time: .shortened)
-                            )
+                    Section(Localization.text(.status)) {
+                        Toggle(Localization.text(.bought), isOn: $isBought)
+                    }
+                }
+
+                Section(Localization.text(.expiration)) {
+                    if canUseExpiration {
+                        Toggle(Localization.text(.expirationEnabled), isOn: $isExpirationEnabled)
+
+                        if isExpirationEnabled {
+                            Stepper(value: $expirationDays, in: 1...365) {
+                                Text(String(format: Localization.text(.expirationDays), expirationDays))
+                            }
                         }
+                    } else {
+                        Button {
+                            onPremiumActionTap()
+                        } label: {
+                            Label(Localization.text(.premiumLocked), systemImage: "crown")
+                        }
+                        Text(Localization.text(.premiumFeature))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
                     }
                 }
             }
@@ -101,7 +130,7 @@ struct ItemEditorSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel") {
+                    Button(Localization.text(.cancel)) {
                         dismiss()
                     }
                 }
@@ -119,18 +148,6 @@ struct ItemEditorSheet: View {
             } message: {
                 Text("Please try again.")
             }
-        }
-    }
-
-    @ViewBuilder
-    private func detailsRow(title: String, value: String) -> some View {
-        HStack {
-            Text(title)
-                .foregroundStyle(.primary)
-            Spacer()
-            Text(value)
-                .multilineTextAlignment(.trailing)
-                .foregroundStyle(.secondary)
         }
     }
 
@@ -154,7 +171,8 @@ struct ItemEditorSheet: View {
             name: name,
             category: category,
             stores: selectedStores,
-            isBought: isBought
+            isBought: isBought,
+            expirationDays: isExpirationEnabled && canUseExpiration ? expirationDays : nil
         )
 
         let didSave = await onSave(draft)
@@ -165,22 +183,21 @@ struct ItemEditorSheet: View {
         }
     }
 
-    
     enum Mode {
         case add
         case edit(GroceryItem)
 
         var title: String {
             switch self {
-            case .add: return "Add Item"
-            case .edit: return "Edit Item"
+            case .add: return Localization.text(.addItem)
+            case .edit: return Localization.text(.editItem)
             }
         }
 
         var submitLabel: String {
             switch self {
-            case .add: return "Create"
-            case .edit: return "Save"
+            case .add: return Localization.text(.create)
+            case .edit: return Localization.text(.save)
             }
         }
 
@@ -193,20 +210,22 @@ struct ItemEditorSheet: View {
     }
 }
 
-
 struct ItemEditorDraft {
     let name: String
     let category: GroceryItemCategory
     let stores: [GroceryStore]
     let isBought: Bool
+    let expirationDays: Int?
 }
-
 
 #Preview {
     ItemEditorSheet(
         mode: .edit(mockItems[1]),
         stores: mockStores,
-        selectedStore: GroceryStore(name: "Hello"),
+        selectedStore: mockStores[0],
+        canUseExpiration: true,
+        onPremiumActionTap: { },
+        initialExpirationDays: 7,
         onSave: { _ in false }
     )
 }

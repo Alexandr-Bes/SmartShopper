@@ -46,6 +46,7 @@ final class SwiftDataGroceryDataSource: GroceryDataSourceProtocol {
 
         model.name = item.name
         model.isBought = item.isBought
+        model.expirationDate = item.expirationDate
         model.category = item.category.rawValue
         model.sortIndex = item.sortIndex
         model.updatedAt = item.updatedAt

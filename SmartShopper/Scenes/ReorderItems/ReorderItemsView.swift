@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ReorderItemsView: View {
-    @State var viewModel: GroceryListViewModelProtocol
+    @State var viewModel: GroceryItemStoreProtocol
 
     var body: some View {
         NavigationView {
@@ -31,5 +31,5 @@ struct ReorderItemsView: View {
 }
 
 #Preview {
-    ReorderItemsView(viewModel: GroceryListViewModel(items: mockItems))
+    ReorderItemsView(viewModel: SharedViewModel(items: mockItems))
 }

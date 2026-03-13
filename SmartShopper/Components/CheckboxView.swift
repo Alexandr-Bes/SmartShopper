@@ -12,7 +12,7 @@ struct CheckboxView: View {
 
     var body: some View {
         Image(systemName: isChecked ? "checkmark.square.fill" : "square")
-            .resizable()
+//            .resizable()
             .foregroundStyle(isChecked ? .yellow : .gray)
     }
 }

@@ -7,18 +7,35 @@
 
 import SwiftUI
 
-struct HomeView<ViewModel: GroceryListViewModelProtocol>: View {
-    @State var viewModel: ViewModel
+struct HomeView: View {
+    @State var viewModel: HomeViewModel
 
     var body: some View {
-        VStack {
-            if viewModel.items.isEmpty {
-                ProgressView()
+        List {
+            ForEach(viewModel.sections) { categoryGroup in
+                Section(header: Text(categoryGroup.category.title)) {
+                    ForEach(categoryGroup.items, id: \.id) { item in
+                        GroceryItemRow(item: item) {
+                            viewModel.toggleItem(item)
+                        }
+                    }
+                    .onDelete { indexSet in
+                        let ids = indexSet.map { categoryGroup.items[$0].id }
+                        Task {
+                            await viewModel.deleteItems(ids: ids)
+                        }
+                    }
+                }
             }
-
-            listView
         }
-        .navigationTitle("List")
+        .navigationTitle(Localization.text(.homeTitle))
+        .navigationDestination(for: String.self) { itemID in
+            if let item = viewModel.item(withID: itemID) {
+                ItemDetailsView(item: item)
+            } else {
+                ContentUnavailableView(Localization.text(.notFound), systemImage: "exclamationmark.triangle")
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 storePickerView
@@ -27,9 +44,11 @@ struct HomeView<ViewModel: GroceryListViewModelProtocol>: View {
                 sortItemsView
             }
         }
+//        .animation(.snappy, value: viewModel.sections)
     }
 
-    @ViewBuilder var storePickerView: some View {
+    @ViewBuilder
+    var storePickerView: some View {
         Menu {
             ForEach(viewModel.stores, id: \.id) { store in
                 Button {
@@ -49,7 +68,8 @@ struct HomeView<ViewModel: GroceryListViewModelProtocol>: View {
         }
     }
 
-    @ViewBuilder var sortItemsView: some View {
+    @ViewBuilder
+    var sortItemsView: some View {
         Menu {
             ForEach(GroceryItemsSortType.allCases, id: \.self) { choice in
                 Button {
@@ -67,22 +87,8 @@ struct HomeView<ViewModel: GroceryListViewModelProtocol>: View {
             Image(systemName: "ellipsis")
         }
     }
-
-    @ViewBuilder var listView: some View {
-        List {
-            ForEach(viewModel.categorizedItems, id: \.category) { categoryGroup in
-                Section(header: Text(categoryGroup.category.rawValue.capitalized)) {
-                    ForEach(categoryGroup.items, id: \.id) { item in
-                        GroceryItemRow(item: item) {
-                            viewModel.toggleItem(item)
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
 #Preview {
-    HomeView(viewModel: GroceryListViewModel(items: mockItems))
+    HomeView(viewModel: HomeViewModel(shared: SharedViewModel(items: mockItems)))
 }

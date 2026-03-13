@@ -9,32 +9,33 @@ import SwiftUI
 
 struct GroceryItemRow: View {
     var item: GroceryItem
-    var onToggle: (() -> Void)?
+    var onToggle: () -> Void
 
-    init(item: GroceryItem, onToggle: (() -> Void)? = nil) {
+    init(item: GroceryItem, onToggle: @escaping () -> Void) {
         self.item = item
         self.onToggle = onToggle
     }
 
     var body: some View {
-        HStack {
-            Text(item.name)
-                .padding(.trailing)
-            Text(item.emoji ?? "")
-            Spacer()
-            CheckboxView(isChecked: item.isBought)
-                .frame(width: 18, height: 18)
-        }
-        .padding(.horizontal, 8)
-        .contentShape(Rectangle()) // Makes whole row tappable
-        .onTapGesture {
-            let lightImpact = UIImpactFeedbackGenerator(style: .light)
-            lightImpact.impactOccurred()
-            onToggle?()
+        ZStack(alignment: .trailing) {
+            NavigationLink(value: item.id) {
+                GroceryItemListRow(item: item, trailingStyle: .none)
+            }
+            .navigationLinkIndicatorVisibility(.hidden)
+            .buttonStyle(.plain)
+
+            Button(action: onToggle) {
+                CheckboxView(isChecked: item.isBought)
+                    .foregroundStyle(item.isBought ? .green : .secondary)
+                    .font(.title2)
+            }
+            .buttonStyle(.borderless)
+            .padding(.trailing, 8)
         }
     }
 }
 
 #Preview {
-    GroceryItemRow(item: GroceryItem(name: "Salmon", category: .fish, stores: []))
+    var item = GroceryItem(name: "Salmon", category: .fish, stores: [], isBought: false)
+    GroceryItemRow(item: GroceryItem(name: "Salmon", category: .fish, stores: [])) { }
 }
