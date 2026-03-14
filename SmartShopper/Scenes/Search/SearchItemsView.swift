@@ -47,3 +47,7 @@ struct SearchItemsView: View {
         }
     }
 }
+
+#Preview {
+    SearchItemsView(viewModel: SearchItemsViewModel(store: SharedViewModel(items: mockItems)))
+}

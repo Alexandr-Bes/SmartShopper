@@ -11,6 +11,8 @@ struct AppTheme {
     let primary: Color
     let destructive: Color
     let accentTint: Color
+    let accentGradientStart: Color
+    let accentGradientEnd: Color
     let rowBadgeBackground: Color
     let rowBadgeText: Color
 
@@ -18,6 +20,8 @@ struct AppTheme {
         primary: .blue,
         destructive: .red,
         accentTint: .blue,
+        accentGradientStart: .blue,
+        accentGradientEnd: .mint,
         rowBadgeBackground: Color.blue.opacity(0.15),
         rowBadgeText: .green
     )

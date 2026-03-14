@@ -8,33 +8,23 @@
 import SwiftUI
 
 struct EmptyItemsView: View {
-
-    var onAddItem: (() -> Void)?
-
     var body: some View {
-        VStack(spacing: 12) {
-            Image(systemName: "basket")
-                .font(.system(size: 28, weight: .semibold))
-                .foregroundStyle(.secondary)
-            Text(Localization.text(.emptyItemsTitle))
-                .font(.headline)
-            Text(Localization.text(.emptyItemsSubtitle))
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
+        VStack {
+            VStack(spacing: 12) {
+                Image(systemName: "basket")
+                    .font(.system(size: 28, weight: .semibold))
+                    .foregroundStyle(.secondary)
+                Text(Localization.text(.emptyItemsTitle))
+                    .font(.headline)
+                Text(Localization.text(.emptyItemsSubtitle))
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
 
-            Button {
-                onAddItem?()
-            } label: {
-                Label(Localization.text(.addNewItem), systemImage: "plus.circle.fill")
-                    .fontWeight(.semibold)
-                    .buttonStyle(.glass)
+
             }
-            .buttonStyle(.borderedProminent)
-            .padding(.top, 4)
+            .padding(.vertical, 40)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 40)
     }
 }
 

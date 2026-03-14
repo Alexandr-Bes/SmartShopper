@@ -10,6 +10,8 @@ import SwiftUI
 struct ManageItemsView: View {
     @Environment(\.appTheme) private var theme
 
+    private let buttonHeight: CGFloat = 60
+
     @State var viewModel: ManageItemsViewModel
     @State private var isShowingAddSheet = false
     @State private var showAddedFeedback = false
@@ -18,10 +20,8 @@ struct ManageItemsView: View {
     var body: some View {
         List {
             if viewModel.items.isEmpty {
-                EmptyItemsView {
-                    isShowingAddSheet = true
-                }
-                .listRowBackground(Color.clear)
+                EmptyItemsView()
+                    .listRowBackground(Color.clear)
             } else {
                 ForEach(viewModel.sections) { group in
                     Section(group.category.title) {
@@ -44,15 +44,24 @@ struct ManageItemsView: View {
                 }
             }
         }
+        .safeAreaInset(edge: .bottom) {
+            Color.clear
+                .frame(height: buttonHeight)
+        }
         .navigationTitle(Localization.text(.manageTitle))
         .navigationDestination(for: String.self) { itemID in
             ManageItemDetailsView(viewModel: viewModel, itemID: itemID)
         }
+        .overlay(alignment: .bottom) {
+            AddButton {
+                addNewItemAction()
+            }
+            .padding(.horizontal)
+        }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    viewModel.loadSuggestedStore()
-                    isShowingAddSheet = true
+                    addNewItemAction()
                 } label: {
                     Label(Localization.text(.addItem), systemImage: "plus")
                 }
@@ -66,7 +75,7 @@ struct ManageItemsView: View {
                     .background(.ultraThinMaterial)
                     .clipShape(Capsule())
                     .transition(.move(edge: .bottom).combined(with: .opacity))
-                    .padding(.bottom, 24)
+                    .padding(.bottom, buttonHeight)
             }
         }
         .animation(.snappy, value: viewModel.sections)
@@ -104,6 +113,11 @@ struct ManageItemsView: View {
         } message: {
             Text(Localization.text(.premiumFeature))
         }
+    }
+
+    private func addNewItemAction() {
+        viewModel.loadSuggestedStore()
+        isShowingAddSheet = true
     }
 }
 

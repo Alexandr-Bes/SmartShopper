@@ -15,6 +15,7 @@ enum TabTarget: String, Hashable {
 }
 
 struct TabsView: View {
+
     @Environment(AppManager.self) private var appManager
 
     @State private var selection: TabTarget = .list
@@ -60,11 +61,10 @@ struct TabsView: View {
                 }
             }
 
-            Tab(Localization.text(.searchTitle), systemImage: "magnifyingglass", value: TabTarget.search) {
+            Tab(value: TabTarget.search, role: .search) {
                 SearchItemsView(viewModel: searchViewModel)
             }
         }
-//        .searchable(text: searchViewModel.query)
         .tabBarMinimizeBehavior(.automatic)
         .onChange(of: appManager.deepLinkTarget) { _, newValue in
             if let newValue {

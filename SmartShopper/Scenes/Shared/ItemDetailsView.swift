@@ -38,3 +38,7 @@ struct ItemDetailsView: View {
         }
     }
 }
+
+#Preview {
+    ItemDetailsView(item: mockItems[0])
+}
