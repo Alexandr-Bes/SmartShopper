@@ -10,7 +10,6 @@ import SwiftUI
 enum TabTarget: String, Hashable {
     case list
     case order
-    case manage
     case search
 }
 
@@ -25,7 +24,6 @@ struct TabsView: View {
     @State private var searchViewModel: SearchItemsViewModel
 
     @State private var homePath: [String] = []
-    @State private var managePath: [String] = []
 
     init(appManager: AppManager) {
         let sharedVM = SharedViewModel(repository: appManager.groceryRepository)
@@ -45,7 +43,7 @@ struct TabsView: View {
         TabView(selection: $selection) {
             Tab(Localization.text(.homeTitle), systemImage: "list.bullet", value: TabTarget.list) {
                 NavigationStack(path: $homePath) {
-                    HomeView(viewModel: homeViewModel)
+                    HomeView(viewModel: homeViewModel, manageViewModel: manageViewModel)
                 }
             }
 
@@ -55,14 +53,8 @@ struct TabsView: View {
                 }
             }
 
-            Tab(Localization.text(.manageTitle), systemImage: "plus.circle", value: TabTarget.manage) {
-                NavigationStack(path: $managePath) {
-                    ManageItemsView(viewModel: manageViewModel)
-                }
-            }
-
             Tab(value: TabTarget.search, role: .search) {
-                SearchItemsView(viewModel: searchViewModel)
+                SearchItemsView(viewModel: searchViewModel, manageViewModel: manageViewModel)
             }
         }
         .tabBarMinimizeBehavior(.automatic)
@@ -80,9 +72,6 @@ struct TabsView: View {
             case let .homeItemDetails(itemID):
                 selection = .list
                 homePath = [itemID]
-            case let .manageItemDetails(itemID):
-                selection = .manage
-                managePath = [itemID]
             case let .search(query):
                 selection = .search
                 searchViewModel.query = query

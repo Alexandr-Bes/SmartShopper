@@ -19,6 +19,7 @@ enum Localization {
         case itemName = "item.name"
         case category = "item.category"
         case stores = "item.stores"
+        case allStores = "store.all"
         case status = "item.status"
         case bought = "item.status.bought"
         case toBuy = "item.status.to_buy"

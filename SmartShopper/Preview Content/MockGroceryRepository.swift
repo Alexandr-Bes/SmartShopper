@@ -10,7 +10,7 @@ import Foundation
 final class MockGroceryRepository: GroceryRepositoryProtocol {
 
     func getSelectedStore() -> GroceryStore {
-        return GroceryStore(name: "Pingo")
+        mockStores.first!
     }
 
     func add(_ item: GroceryItem) async throws {

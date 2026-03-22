@@ -1,9 +1,79 @@
 import SwiftUI
 
 struct ItemDetailsView: View {
-    let item: GroceryItem
+    @Environment(\.dismiss) private var dismiss
+
+    let viewModel: ManageItemsViewModel
+    let itemID: String
+
+    @State private var isShowingEditSheet = false
+    @State private var isShowingDeleteConfirmation = false
 
     var body: some View {
+        Group {
+            if let item {
+                detailsList(for: item)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button {
+                                isShowingEditSheet = true
+                            } label: {
+                                Image(systemName: "square.and.pencil")
+                                    .foregroundStyle(Color.black)
+                            }
+                        }
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button(role: .destructive) {
+                                isShowingDeleteConfirmation = true
+                            } label: {
+                                Image(systemName: "trash")
+                                    .foregroundStyle(Color.red)
+                            }
+                        }
+                    }
+            } else {
+                ContentUnavailableView(Localization.text(.notFound), systemImage: "exclamationmark.triangle")
+            }
+        }
+        .sheet(isPresented: $isShowingEditSheet) {
+            if let item {
+                ItemEditorSheet(
+                    mode: .edit(item),
+                    stores: viewModel.stores,
+                    selectedStore: viewModel.selectedStore,
+                    canUseExpiration: viewModel.canUseExpiration,
+                    onPremiumActionTap: { },
+                    initialExpirationDays: viewModel.expirationDays(from: item)
+                ) { draft in
+                    await viewModel.updateItem(
+                        id: item.id,
+                        name: draft.name,
+                        category: draft.category,
+                        stores: draft.stores,
+                        isBought: draft.isBought,
+                        expirationDays: draft.expirationDays
+                    )
+                }
+            }
+        }
+        .confirmationDialog("Delete this item?", isPresented: $isShowingDeleteConfirmation, titleVisibility: .visible) {
+            Button(Localization.text(.delete), role: .destructive) {
+                Task {
+                    await viewModel.deleteItems(ids: [itemID])
+                    dismiss()
+                }
+            }
+            Button(Localization.text(.cancel), role: .cancel) { }
+        } message: {
+            Text("This action cannot be undone.")
+        }
+    }
+
+    private var item: GroceryItem? {
+        viewModel.item(withID: itemID)
+    }
+
+    private func detailsList(for item: GroceryItem) -> some View {
         List {
             Section(Localization.text(.itemDetails)) {
                 detailsRow(title: Localization.text(.itemName), value: item.name)
@@ -40,5 +110,14 @@ struct ItemDetailsView: View {
 }
 
 #Preview {
-    ItemDetailsView(item: mockItems[0])
+    NavigationStack {
+        ItemDetailsView(
+            viewModel: ManageItemsViewModel(
+                shared: SharedViewModel(items: mockItems),
+                premiumAccess: BasicPremiumAccess(),
+                locationService: LocationService()
+            ),
+            itemID: mockItems[0].id
+        )
+    }
 }

@@ -21,7 +21,7 @@ struct GroceryItemListRow: View {
                 .clipShape(RoundedRectangle(cornerRadius: 10))
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(item.name)
+                Text(item.name.capitalized)
                     .font(.body.weight(.medium))
                 Text(item.stores.map(\.name).joined(separator: ", "))
                     .font(.caption)

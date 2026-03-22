@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SearchItemsView: View {
     @State var viewModel: SearchItemsViewModel
+    let manageViewModel: ManageItemsViewModel
     @State private var path: [String] = []
 
     var body: some View {
@@ -38,16 +39,20 @@ struct SearchItemsView: View {
                 }
             }
             .navigationDestination(for: String.self) { id in
-                if let item = viewModel.item(withID: id) {
-                    ItemDetailsView(item: item)
-                } else {
-                    ContentUnavailableView(Localization.text(.notFound), systemImage: "exclamationmark.triangle")
-                }
+                ItemDetailsView(viewModel: manageViewModel, itemID: id)
             }
         }
     }
 }
 
 #Preview {
-    SearchItemsView(viewModel: SearchItemsViewModel(store: SharedViewModel(items: mockItems)))
+    let shared = SharedViewModel(items: mockItems)
+    SearchItemsView(
+        viewModel: SearchItemsViewModel(store: shared),
+        manageViewModel: ManageItemsViewModel(
+            shared: shared,
+            premiumAccess: BasicPremiumAccess(),
+            locationService: LocationService()
+        )
+    )
 }

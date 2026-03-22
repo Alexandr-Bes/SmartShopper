@@ -10,7 +10,6 @@ import Foundation
 enum DeepLinkRoute: Equatable {
 
     case tab(TabTarget)
-    case manageItemDetails(itemID: String)
     case homeItemDetails(itemID: String)
     case search(query: String)
 
@@ -32,9 +31,9 @@ enum DeepLinkRoute: Equatable {
             return .tab(.list)
         case "manage":
             if let itemID = value("itemId"), !itemID.isEmpty {
-                return .manageItemDetails(itemID: itemID)
+                return .homeItemDetails(itemID: itemID)
             }
-            return .tab(.manage)
+            return .tab(.list)
         case "order":
             return .tab(.order)
         case "search":

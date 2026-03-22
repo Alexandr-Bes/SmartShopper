@@ -8,6 +8,7 @@
 "item.name" = "Item name";
 "item.category" = "Category";
 "item.stores" = "Stores";
+"store.all" = "All Stores";
 "item.status" = "Status";
 "item.status.bought" = "Bought";
 "item.status.to_buy" = "To Buy";

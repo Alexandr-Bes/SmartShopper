@@ -14,6 +14,7 @@ protocol GroceryItemStoreProtocol: Observable {
     var selectedStore: GroceryStore { get set }
     var stores: [GroceryStore] { get set }
     var sortOption: GroceryItemsSortType { get set }
+    var showsSelectedStoreOnly: Bool { get }
 
     func loadItems()
     func toggleItem(_ item: GroceryItem)
@@ -36,6 +37,7 @@ protocol GroceryItemStoreProtocol: Observable {
     func searchItems(query: String) -> [GroceryItem]
     func sortItems()
     func filterByStore()
+    func showAllStores()
 }
 
 @Observable
@@ -54,7 +56,7 @@ final class SharedViewModel: GroceryItemStoreProtocol {
     var sortOption: GroceryItemsSortType = .category
 
     private let repository: any GroceryRepositoryProtocol
-    private var showsSelectedStoreOnly: Bool = false
+    var showsSelectedStoreOnly: Bool = false
 
     //MARK: - Init
     init(repository: any GroceryRepositoryProtocol) {
@@ -216,6 +218,10 @@ final class SharedViewModel: GroceryItemStoreProtocol {
 
     func filterByStore() {
         showsSelectedStoreOnly = true
+    }
+
+    func showAllStores() {
+        showsSelectedStoreOnly = false
     }
 }
 

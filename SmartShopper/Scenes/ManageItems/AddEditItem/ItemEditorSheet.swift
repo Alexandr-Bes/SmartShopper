@@ -12,7 +12,7 @@ struct ItemEditorSheet: View {
 
     let mode: Mode
     let stores: [GroceryStore]
-    let selectedStore: GroceryStore
+    let selectedStore: GroceryStore?
     let canUseExpiration: Bool
     let onPremiumActionTap: () -> Void
     let initialExpirationDays: Int?
@@ -30,7 +30,7 @@ struct ItemEditorSheet: View {
     init(
         mode: Mode,
         stores: [GroceryStore],
-        selectedStore: GroceryStore,
+        selectedStore: GroceryStore?,
         canUseExpiration: Bool,
         onPremiumActionTap: @escaping () -> Void,
         initialExpirationDays: Int?,
@@ -49,7 +49,8 @@ struct ItemEditorSheet: View {
             _name = State(initialValue: "")
             _category = State(initialValue: .unCategorized)
             _isBought = State(initialValue: false)
-            _selectedStoreIDs = State(initialValue: [selectedStore.id])
+            let defaultSelectedStoreIDs = selectedStore.map { Set([$0.id]) } ?? Set(stores.map(\.id))
+            _selectedStoreIDs = State(initialValue: defaultSelectedStoreIDs)
 
         case let .edit(item):
             _name = State(initialValue: item.name)

@@ -9,6 +9,10 @@ import SwiftUI
 
 struct HomeView: View {
     @State var viewModel: HomeViewModel
+    let manageViewModel: ManageItemsViewModel
+
+    @State private var isShowingAddSheet = false
+    @State private var showPremiumInfo = false
 
     var body: some View {
         List {
@@ -30,32 +34,72 @@ struct HomeView: View {
         }
         .navigationTitle(Localization.text(.homeTitle))
         .navigationDestination(for: String.self) { itemID in
-            if let item = viewModel.item(withID: itemID) {
-                ItemDetailsView(item: item)
-            } else {
-                ContentUnavailableView(Localization.text(.notFound), systemImage: "exclamationmark.triangle")
-            }
+            ItemDetailsView(viewModel: manageViewModel, itemID: itemID)
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 storePickerView
             }
-            ToolbarItem(placement: .topBarTrailing) {
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                Button {
+                    addNewItemAction()
+                } label: {
+                    Image(systemName: "plus")
+                }
+                .accessibilityLabel(Localization.text(.addItem))
+
                 sortItemsView
             }
         }
+        .sheet(isPresented: $isShowingAddSheet) {
+            ItemEditorSheet(
+                mode: .add,
+                stores: manageViewModel.stores,
+                selectedStore: manageViewModel.suggestedStoreForNewItem,
+                canUseExpiration: manageViewModel.canUseExpiration,
+                onPremiumActionTap: { showPremiumInfo = true },
+                initialExpirationDays: nil
+            ) { draft in
+                await manageViewModel.addItem(
+                    name: draft.name,
+                    category: draft.category,
+                    stores: draft.stores,
+                    expirationDays: draft.expirationDays
+                )
+            }
+        }
+        .alert(Localization.text(.premiumLocked), isPresented: $showPremiumInfo) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(Localization.text(.premiumFeature))
+        }
 //        .animation(.snappy, value: viewModel.sections)
+    }
+
+    private func addNewItemAction() {
+        manageViewModel.loadSuggestedStore()
+        isShowingAddSheet = true
     }
 
     @ViewBuilder
     var storePickerView: some View {
         Menu {
+            Button {
+                viewModel.showAllStores()
+            } label: {
+                if viewModel.isShowingAllStores {
+                    Label(Localization.text(.allStores), systemImage: "checkmark")
+                } else {
+                    Text(Localization.text(.allStores))
+                }
+            }
+
             ForEach(viewModel.stores, id: \.id) { store in
                 Button {
                     viewModel.selectedStore = store
                     viewModel.filterByStore()
                 } label: {
-                    if viewModel.selectedStore == store {
+                    if !viewModel.isShowingAllStores && viewModel.selectedStore == store {
                         Label(store.name, systemImage: "checkmark")
                     } else {
                         Text(store.name)
@@ -90,5 +134,15 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView(viewModel: HomeViewModel(shared: SharedViewModel(items: mockItems)))
+    let shared = SharedViewModel(items: mockItems)
+    NavigationStack {
+        HomeView(
+            viewModel: HomeViewModel(shared: shared),
+            manageViewModel: ManageItemsViewModel(
+                shared: shared,
+                premiumAccess: BasicPremiumAccess(),
+                locationService: LocationService()
+            )
+        )
+    }
 }

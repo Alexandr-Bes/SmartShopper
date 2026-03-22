@@ -25,7 +25,7 @@ final class GroceryRepository: GroceryRepositoryProtocol {
 
     //TODO: - From location / Last selected
     func getSelectedStore() -> GroceryStore {
-        return mockStores.first(where: { $0.selected }) ?? mockStores.first!
+        mockStores.first!
     }
 
     func getItems() async throws -> [GroceryItem] {
@@ -72,7 +72,7 @@ extension GroceryRepository {
 */
 // MARK: - MOCKS
 
-let mockStores: [GroceryStore] = [GroceryStore(name: "Pingo Doce", selected: true),
+let mockStores: [GroceryStore] = [GroceryStore(name: "Pingo Doce"),
                                   GroceryStore(name: "Continente")]
 let mockItems = [
     GroceryItem(id: "123", name: "Milk", category: .drinks, stores: [mockStores.first!], lastTimeBought: .now),

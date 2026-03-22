@@ -59,8 +59,6 @@ struct ContentView: View {
                 appManager?.deepLinkTarget = tab
             case .homeItemDetails:
                 appManager?.deepLinkTarget = .list
-            case .manageItemDetails:
-                appManager?.deepLinkTarget = .manage
             case .search:
                 appManager?.deepLinkTarget = .search
             }

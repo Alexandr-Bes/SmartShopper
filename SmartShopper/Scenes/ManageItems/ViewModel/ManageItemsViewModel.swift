@@ -46,13 +46,14 @@ final class ManageItemsViewModel {
 
     func loadSuggestedStore() {
         guard canUseNearbyStorePreselection else {
-            suggestedStoreForNewItem = selectedStore
+            suggestedStoreForNewItem = sharedViewModel.showsSelectedStoreOnly ? selectedStore : nil
             return
         }
 
         locationService.requestPermissionIfNeeded()
         locationService.start()
-        suggestedStoreForNewItem = locationService.nearestStore(from: sharedViewModel.stores) ?? selectedStore
+        suggestedStoreForNewItem = locationService.nearestStore(from: sharedViewModel.stores)
+            ?? (sharedViewModel.showsSelectedStoreOnly ? selectedStore : nil)
     }
 
     func addItem(

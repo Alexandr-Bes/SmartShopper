@@ -36,12 +36,20 @@ final class HomeViewModel {
         set { sharedViewModel.sortOption = newValue }
     }
 
+    var isShowingAllStores: Bool {
+        !sharedViewModel.showsSelectedStoreOnly
+    }
+
     func toggleItem(_ item: GroceryItem) {
         sharedViewModel.toggleItem(item)
     }
 
     func filterByStore() {
         sharedViewModel.filterByStore()
+    }
+
+    func showAllStores() {
+        sharedViewModel.showAllStores()
     }
 
     func sortItems() {
