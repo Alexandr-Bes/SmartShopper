@@ -8,6 +8,7 @@
 import Observation
 import SwiftData
 
+@MainActor
 @Observable
 final class AppManager {
     private var actualStore = GroceryStore(name: "Pingo Doce")

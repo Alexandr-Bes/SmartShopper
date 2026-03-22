@@ -8,6 +8,7 @@
 import SwiftUI
 import Combine
 
+@MainActor
 protocol GroceryItemStoreProtocol: Observable {
     var items: [GroceryItem] { get set }
     var sections: [GroceryItemSection] { get }
@@ -40,6 +41,7 @@ protocol GroceryItemStoreProtocol: Observable {
     func showAllStores()
 }
 
+@MainActor
 @Observable
 final class SharedViewModel: GroceryItemStoreProtocol {
 

@@ -28,7 +28,7 @@ struct AppTheme {
 }
 
 private struct AppThemeKey: EnvironmentKey {
-    static var defaultValue: AppTheme = .default
+    static let defaultValue: AppTheme = .default
 }
 
 extension EnvironmentValues {

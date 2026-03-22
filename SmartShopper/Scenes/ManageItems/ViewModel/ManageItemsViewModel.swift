@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 
+@MainActor
 @Observable
 final class ManageItemsViewModel {
     let sharedViewModel: SharedViewModel

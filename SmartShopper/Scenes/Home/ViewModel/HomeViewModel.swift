@@ -9,6 +9,7 @@
 import Observation
 import Foundation
 
+@MainActor
 @Observable
 final class HomeViewModel {
     private var sharedViewModel: GroceryItemStoreProtocol

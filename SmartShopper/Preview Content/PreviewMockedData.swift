@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 
+@MainActor
 final class PreviewMockedDataSource: GroceryDataSourceProtocol {
 
     private var store: [GroceryItem]

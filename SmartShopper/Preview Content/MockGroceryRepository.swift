@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 final class MockGroceryRepository: GroceryRepositoryProtocol {
 
     func getSelectedStore() -> GroceryStore {

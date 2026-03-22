@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 protocol GroceryRepositoryProtocol {
     func getSelectedStore() -> GroceryStore
     func add(_ item: GroceryItem) async throws
@@ -15,6 +16,7 @@ protocol GroceryRepositoryProtocol {
     func deleteItems(_ ids: [String]) async throws
 }
 
+@MainActor
 final class GroceryRepository: GroceryRepositoryProtocol {
 
     private let dataSource: GroceryDataSourceProtocol
